@@ -31,7 +31,7 @@ jobs:
             - name: Poster ou mettre à jour le commentaire PR
               uses: actions/github-script@v7
               with:
-                  github-token: ${{ secrets.GH_TOKEN }}
+                  github-token: ${{ secrets.GB_TOKEN }}
 
                   script: |
                       const fs = require('fs');
@@ -99,4 +99,4 @@ jobs:
                         core.info("🆕 Nouveau commentaire ajouté");
                       }
               env:
-                  BASE_URL: ${{ steps.vercel.outputs.preview-url }}
+                  BASE_URL: "https://metemotion.onrender.com"

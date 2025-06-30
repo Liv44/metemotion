@@ -13,7 +13,11 @@
 		"lint": "eslint ./src/**/*.{ts,tsx} --fix",
 		"format:commit": "prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown",
 		"preview": "vite preview",
-		"prepare": "husky"
+		"prepare": "husky",
+		"lighthouse:ci": "lhci autorun",
+		"test:a11y": "playwright test --grep @a11y",
+		"report:a11y": "node scripts/generate-a11y-report.ts",
+		"a11y": "pnpm run test:a11y && pnpm run report:a11y"
 	},
 	"dependencies": {
 		"@radix-ui/react-slot": "^1.2.3",
@@ -28,10 +32,13 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.25.0",
+		"@playwright/test": "^1.53.2",
 		"@types/node": "^24.0.0",
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",
 		"@vitejs/plugin-react": "^4.4.1",
+		"axe-html-reporter": "^2.2.11",
+		"axe-playwright": "^2.1.0",
 		"eslint": "^9.25.0",
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.19",

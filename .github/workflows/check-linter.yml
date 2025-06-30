@@ -80,7 +80,7 @@ jobs:
               if: github.event.pull_request
               uses: actions/github-script@v7
               with:
-                  github-token: ${{ secrets.GH_TOKEN }}
+                  github-token: ${{ secrets.GB_TOKEN }}
                   script: |
                       const fs = require('fs');
 

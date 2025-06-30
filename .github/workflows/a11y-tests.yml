@@ -1,0 +1,119 @@
+name: Accessibility Manual Tests (Playwright)
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+        branches:
+            - main
+
+jobs:
+    a11y-tests:
+        name: Manual accessibility tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: 🔧 Setup Node.js and pnpm
+              uses: ./.github/actions/setup-node-pnpm
+              with:
+                  node-version: 22.14.0
+                  pnpm-version: 10.6.3
+
+            - name: Install dependencies
+              run: pnpm install --no-frozen-lockfile
+
+            - name: Install Playwright browsers
+              run: pnpx playwright install --with-deps
+
+            - name: Run Playwright manual a11y tests
+              id: playwright
+              env:
+                  PREVIEW_URL: "https://metemotion.onrender.com"
+              run: |
+                  mkdir -p results
+                  pnpx playwright test --project=chromium | tee results/manual-a11y.log
+            - name: Clean ANSI and extract test summary
+              run: |
+                  pnpm install strip-ansi-cli
+                  tail -n 30 results/manual-a11y.log | pnpx strip-ansi-cli > results/manual-summary.txt
+                  echo '### 📋 Résumé des tests :' > results/manual-comment.md
+                  echo '```' >> results/manual-comment.md
+                  cat results/manual-summary.txt >> results/manual-comment.md
+                  echo '```' >> results/manual-comment.md
+            - name: Résumé dans GitHub Actions
+              if: always()
+              run: |
+                  echo "## ✅ Résultats des tests Playwright personnalisés" >> $GITHUB_STEP_SUMMARY
+                  if test -f results/manual-summary.txt; then
+                    echo "### 🔎 Rapport Playwright" >> $GITHUB_STEP_SUMMARY
+                    echo '```' >> $GITHUB_STEP_SUMMARY
+                    cat results/manual-summary.txt >> $GITHUB_STEP_SUMMARY
+                    echo '```' >> $GITHUB_STEP_SUMMARY
+                  else
+                    echo "⚠️ Résumé non généré" >> $GITHUB_STEP_SUMMARY
+                  fi
+            - name: Upload test logs
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-manual-log
+                  path: results/manual-a11y.log
+
+            - name: Comment (or update) PR with manual accessibility results
+              if: github.event.pull_request
+              uses: actions/github-script@v7
+              with:
+                  github-token: ${{ secrets.GB_TOKEN }}
+                  script: |
+                      const fs = require('fs');
+                      const runId = process.env.GITHUB_RUN_ID;
+                      const { owner, repo } = context.repo;
+                      const issue_number = context.issue.number;
+                      const renderUrl = process.env.PREVIEW_URL || 'https://metemotion.onrender.com';
+                      const reportPath = 'results/manual-comment.md';
+                      let summary = '';
+                      try {
+                        summary = fs.readFileSync(reportPath, 'utf8');
+                      } catch (e) {
+                        summary = '⚠️ *Erreur lors de la lecture du fichier Markdown généré (`manual-comment.md`).*';
+                      }
+                      const body = [
+                        '<!-- manual-a11y-report -->', // 🏷️ ancre unique
+                        '## ✅ Résultats des tests Playwright personnalisés',
+                        '',
+                        `🔗 **URL testée** : [${renderUrl}](${renderUrl})`,
+                        '',
+                        `📄 **Exécution complète** : [Artefacts GitHub Actions](https://github.com/${owner}/${repo}/actions/runs/${runId})`,
+                        '',
+                        '---',
+                        '',
+                        summary
+                      ].join('\n');
+                      const { data: comments } = await github.rest.issues.listComments({
+                        owner,
+                        repo,
+                        issue_number,
+                        per_page: 100
+                      });
+                      const existing = comments.find(c =>
+                        c.user?.type === 'Bot' &&
+                        c.body?.includes('<!-- manual-a11y-report -->')
+                      );
+                      if (existing) {
+                        await github.rest.issues.updateComment({
+                          owner,
+                          repo,
+                          comment_id: existing.id,
+                          body
+                        });
+                        core.info(`Commentaire manual-a11y mis à jour (#${existing.id})`);
+                      } else {
+                        await github.rest.issues.createComment({
+                          owner,
+                          repo,
+                          issue_number,
+                          body
+                        });
+                        core.info('Nouveau commentaire manual-a11y créé');
+                      }
