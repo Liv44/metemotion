@@ -1,0 +1,102 @@
+name: GreenFrame audit
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+        branches:
+            - main
+
+jobs:
+    greenframe:
+        name: GreenFrame CO₂ audit
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Lancer GreenFrame sur plusieurs pages
+              run: |
+                  BASE_URL="https://metemotion.onrender.com"
+                  echo "🌱 Test de l’URL base : $BASE_URL"
+
+                  PAGES=("/")
+                  mkdir greenframe-reports
+
+                  for path in "${PAGES[@]}"; do
+                    SAFE_NAME=$(echo "$path" | sed 's|/|_|g')
+                    FULL_URL="${BASE_URL%/}${path}"
+                    echo "➡️ Analyse de ${FULL_URL}"
+
+                    npx --yes greenframe "$FULL_URL" --json > "greenframe-reports/${SAFE_NAME}.json" || echo "{\"error\":\"Échec pour $FULL_URL\"}" > "greenframe-reports/${SAFE_NAME}.json"
+                  done
+
+            - name: Poster ou mettre à jour le commentaire PR
+              uses: actions/github-script@v7
+              with:
+                  github-token: ${{ secrets.GH_TOKEN }}
+
+                  script: |
+                      const fs = require('fs');
+                      const path = require('path');
+                      const { owner, repo } = context.repo;
+                      const issue_number = context.issue.number;
+                      const baseUrl = process.env.BASE_URL;
+
+                      const files = fs.readdirSync('./greenframe-reports');
+                      let body = [
+                        '<!-- greenframe-report -->',
+                        '## 🌿 Rapport GreenFrame multipage',
+                        `🔗 Base URL : [${baseUrl}](${baseUrl})`,
+                        ''
+                      ];
+
+                      for (const file of files) {
+                        const json = JSON.parse(fs.readFileSync(path.join('./greenframe-reports', file), 'utf8'));
+                        const page = file.replace('.json', '').replace(/_/g, '/') || '/';
+
+                        if (json.error) {
+                          body.push(`### ❌ ${page}\n- ${json.error}`);
+                          continue;
+                        }
+
+                        const grams = json.co2?.grams ?? 0;
+                        const emoji = grams < 0.5 ? '🟢' : (grams < 1 ? '🟠' : '🔴');
+
+                        body.push(`### ${page}`);
+                        body.push(`- CO₂ estimé : **${grams.toFixed(2)}g** ${emoji}`);
+                        body.push(`- Chargement simulé : ${json.steps?.length ?? '?'} étapes`);
+                        body.push('');
+                      }
+
+                      body.push('_Analyse réalisée avec [GreenFrame](https://greenframe.io)_');
+
+                      const finalComment = body.join('\n');
+
+                      const { data: comments } = await github.rest.issues.listComments({
+                        owner,
+                        repo,
+                        issue_number,
+                        per_page: 100
+                      });
+
+                      const existing = comments.find(c =>
+                        c.user?.type === 'Bot' && c.body?.includes('<!-- greenframe-report -->')
+                      );
+
+                      if (existing) {
+                        await github.rest.issues.updateComment({
+                          owner,
+                          repo,
+                          comment_id: existing.id,
+                          body: finalComment
+                        });
+                        core.info("🔁 Commentaire mis à jour");
+                      } else {
+                        await github.rest.issues.createComment({
+                          owner,
+                          repo,
+                          issue_number,
+                          body: finalComment
+                        });
+                        core.info("🆕 Nouveau commentaire ajouté");
+                      }
+              env:
+                  BASE_URL: ${{ steps.vercel.outputs.preview-url }}

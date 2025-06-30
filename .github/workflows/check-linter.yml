@@ -38,7 +38,7 @@ jobs:
                       ${{ runner.os }}-pnpm-store-
 
             - name: 📚 Install dependencies
-              run: pnpm install
+              run: pnpm install --no-frozen-lockfile
 
             - name: 💾 Cache workspace
               uses: actions/cache@v3
@@ -64,7 +64,7 @@ jobs:
                   pnpm-version: 10.6.3
 
             - name: Install dependencies
-              run: pnpm i
+              run: pnpm install --no-frozen-lockfile
 
             - name: 🔍 Run ESLint
               run: pnpm lint
