@@ -10,9 +10,15 @@ importers:
             "@radix-ui/react-slot":
                 specifier: ^1.2.3
                 version: 1.2.3(@types/react@19.1.7)(react@19.1.0)
+            "@supabase/supabase-js":
+                specifier: ^2.50.2
+                version: 2.50.2
             "@tailwindcss/vite":
                 specifier: ^4.1.8
                 version: 4.1.8(vite@6.3.5(@types/node@24.0.0)(jiti@2.4.2)(lightningcss@1.30.1))
+            "@tanstack/react-query":
+                specifier: ^5.81.5
+                version: 5.81.5(react@19.1.0)
             class-variance-authority:
                 specifier: ^0.7.1
                 version: 0.7.1
@@ -28,6 +34,9 @@ importers:
             react-dom:
                 specifier: ^19.1.0
                 version: 19.1.0(react@19.1.0)
+            react-router-dom:
+                specifier: ^7.6.3
+                version: 7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
             tailwind-merge:
                 specifier: ^3.3.1
                 version: 3.3.1
@@ -798,6 +807,49 @@ packages:
         cpu: [x64]
         os: [win32]
 
+    "@supabase/auth-js@2.70.0":
+        resolution:
+            {
+                integrity: sha512-BaAK/tOAZFJtzF1sE3gJ2FwTjLf4ky3PSvcvLGEgEmO4BSBkwWKu8l67rLLIBZPDnCyV7Owk2uPyKHa0kj5QGg==,
+            }
+
+    "@supabase/functions-js@2.4.4":
+        resolution:
+            {
+                integrity: sha512-WL2p6r4AXNGwop7iwvul2BvOtuJ1YQy8EbOd0dhG1oN1q8el/BIRSFCFnWAMM/vJJlHWLi4ad22sKbKr9mvjoA==,
+            }
+
+    "@supabase/node-fetch@2.6.15":
+        resolution:
+            {
+                integrity: sha512-1ibVeYUacxWYi9i0cf5efil6adJ9WRyZBLivgjs+AUpewx1F3xPi7gLgaASI2SmIQxPoCEjAsLAzKPgMJVgOUQ==,
+            }
+        engines: { node: 4.x || >=6.0.0 }
+
+    "@supabase/postgrest-js@1.19.4":
+        resolution:
+            {
+                integrity: sha512-O4soKqKtZIW3olqmbXXbKugUtByD2jPa8kL2m2c1oozAO11uCcGrRhkZL0kVxjBLrXHE0mdSkFsMj7jDSfyNpw==,
+            }
+
+    "@supabase/realtime-js@2.11.15":
+        resolution:
+            {
+                integrity: sha512-HQKRnwAqdVqJW/P9TjKVK+/ETpW4yQ8tyDPPtRMKOH4Uh3vQD74vmj353CYs8+YwVBKubeUOOEpI9CT8mT4obw==,
+            }
+
+    "@supabase/storage-js@2.7.1":
+        resolution:
+            {
+                integrity: sha512-asYHcyDR1fKqrMpytAS1zjyEfvxuOIp1CIXX7ji4lHHcJKqyk+sLl/Vxgm4sN6u8zvuUtae9e4kDxQP2qrwWBA==,
+            }
+
+    "@supabase/supabase-js@2.50.2":
+        resolution:
+            {
+                integrity: sha512-+27xlGgw7VyfwXXe+OiDJQosJNS+PPtjj1EnLR4uk+PKKZ91RA0/8NbIQybe6AGPanAaPtgOFFMMCArC6fZ++Q==,
+            }
+
     "@tailwindcss/node@4.1.8":
         resolution:
             {
@@ -933,6 +985,20 @@ packages:
         peerDependencies:
             vite: ^5.2.0 || ^6
 
+    "@tanstack/query-core@5.81.5":
+        resolution:
+            {
+                integrity: sha512-ZJOgCy/z2qpZXWaj/oxvodDx07XcQa9BF92c0oINjHkoqUPsmm3uG08HpTaviviZ/N9eP1f9CM7mKSEkIo7O1Q==,
+            }
+
+    "@tanstack/react-query@5.81.5":
+        resolution:
+            {
+                integrity: sha512-lOf2KqRRiYWpQT86eeeftAGnjuTR35myTP8MXyvHa81VlomoAWNEd8x5vkcAfQefu0qtYCvyqLropFZqgI2EQw==,
+            }
+        peerDependencies:
+            react: ^18 || ^19
+
     "@types/babel__core@7.20.5":
         resolution:
             {
@@ -981,6 +1047,12 @@ packages:
                 integrity: sha512-yZQa2zm87aRVcqDyH5+4Hv9KYgSdgwX1rFnGvpbzMaC7YAljmhBET93TPiTd3ObwTL+gSpIzPKg5BqVxdCvxKg==,
             }
 
+    "@types/phoenix@1.6.6":
+        resolution:
+            {
+                integrity: sha512-PIzZZlEppgrpoT2QgbnDU+MMzuR6BbCjllj0bM70lWoejMeNJAxCchxnv7J3XFkI8MpygtRpzXrIlmWUBclP5A==,
+            }
+
     "@types/react-dom@19.1.6":
         resolution:
             {
@@ -993,6 +1065,12 @@ packages:
         resolution:
             {
                 integrity: sha512-BnsPLV43ddr05N71gaGzyZ5hzkCmGwhMvYc8zmvI8Ci1bRkkDSzDDVfAXfN2tk748OwI7ediiPX6PfT9p0QGVg==,
+            }
+
+    "@types/ws@8.18.1":
+        resolution:
+            {
+                integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==,
             }
 
     "@typescript-eslint/eslint-plugin@8.34.0":
@@ -1225,6 +1303,13 @@ packages:
             {
                 integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==,
             }
+
+    cookie@1.0.2:
+        resolution:
+            {
+                integrity: sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==,
+            }
+        engines: { node: ">=18" }
 
     cross-spawn@7.0.6:
         resolution:
@@ -1592,6 +1677,14 @@ packages:
             {
                 integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==,
             }
+
+    isows@1.0.7:
+        resolution:
+            {
+                integrity: sha512-I1fSfDCZL5P0v33sVqeTDSpcstAg/N+wF5HS033mogOVIp4B+oHC7oOCsA3axAbBSGTJ8QubbNmnIRN/h8U7hg==,
+            }
+        peerDependencies:
+            ws: "*"
 
     jiti@2.4.2:
         resolution:
@@ -1977,6 +2070,29 @@ packages:
             }
         engines: { node: ">=0.10.0" }
 
+    react-router-dom@7.6.3:
+        resolution:
+            {
+                integrity: sha512-DiWJm9qdUAmiJrVWaeJdu4TKu13+iB/8IEi0EW/XgaHCjW/vWGrwzup0GVvaMteuZjKnh5bEvJP/K0MDnzawHw==,
+            }
+        engines: { node: ">=20.0.0" }
+        peerDependencies:
+            react: ">=18"
+            react-dom: ">=18"
+
+    react-router@7.6.3:
+        resolution:
+            {
+                integrity: sha512-zf45LZp5skDC6I3jDLXQUu0u26jtuP4lEGbc7BbdyxenBN1vJSTA18czM2D+h5qyMBuMrD+9uB+mU37HIoKGRA==,
+            }
+        engines: { node: ">=20.0.0" }
+        peerDependencies:
+            react: ">=18"
+            react-dom: ">=18"
+        peerDependenciesMeta:
+            react-dom:
+                optional: true
+
     react@19.1.0:
         resolution:
             {
@@ -2032,6 +2148,12 @@ packages:
             }
         engines: { node: ">=10" }
         hasBin: true
+
+    set-cookie-parser@2.7.1:
+        resolution:
+            {
+                integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==,
+            }
 
     shebang-command@2.0.0:
         resolution:
@@ -2107,6 +2229,12 @@ packages:
                 integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==,
             }
         engines: { node: ">=8.0" }
+
+    tr46@0.0.3:
+        resolution:
+            {
+                integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==,
+            }
 
     ts-api-utils@2.1.0:
         resolution:
@@ -2212,6 +2340,18 @@ packages:
             yaml:
                 optional: true
 
+    webidl-conversions@3.0.1:
+        resolution:
+            {
+                integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==,
+            }
+
+    whatwg-url@5.0.0:
+        resolution:
+            {
+                integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==,
+            }
+
     which@2.0.2:
         resolution:
             {
@@ -2226,6 +2366,21 @@ packages:
                 integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==,
             }
         engines: { node: ">=0.10.0" }
+
+    ws@8.18.3:
+        resolution:
+            {
+                integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==,
+            }
+        engines: { node: ">=10.0.0" }
+        peerDependencies:
+            bufferutil: ^4.0.1
+            utf-8-validate: ">=5.0.2"
+        peerDependenciesMeta:
+            bufferutil:
+                optional: true
+            utf-8-validate:
+                optional: true
 
     yallist@3.1.1:
         resolution:
@@ -2603,6 +2758,49 @@ snapshots:
     "@rollup/rollup-win32-x64-msvc@4.43.0":
         optional: true
 
+    "@supabase/auth-js@2.70.0":
+        dependencies:
+            "@supabase/node-fetch": 2.6.15
+
+    "@supabase/functions-js@2.4.4":
+        dependencies:
+            "@supabase/node-fetch": 2.6.15
+
+    "@supabase/node-fetch@2.6.15":
+        dependencies:
+            whatwg-url: 5.0.0
+
+    "@supabase/postgrest-js@1.19.4":
+        dependencies:
+            "@supabase/node-fetch": 2.6.15
+
+    "@supabase/realtime-js@2.11.15":
+        dependencies:
+            "@supabase/node-fetch": 2.6.15
+            "@types/phoenix": 1.6.6
+            "@types/ws": 8.18.1
+            isows: 1.0.7(ws@8.18.3)
+            ws: 8.18.3
+        transitivePeerDependencies:
+            - bufferutil
+            - utf-8-validate
+
+    "@supabase/storage-js@2.7.1":
+        dependencies:
+            "@supabase/node-fetch": 2.6.15
+
+    "@supabase/supabase-js@2.50.2":
+        dependencies:
+            "@supabase/auth-js": 2.70.0
+            "@supabase/functions-js": 2.4.4
+            "@supabase/node-fetch": 2.6.15
+            "@supabase/postgrest-js": 1.19.4
+            "@supabase/realtime-js": 2.11.15
+            "@supabase/storage-js": 2.7.1
+        transitivePeerDependencies:
+            - bufferutil
+            - utf-8-validate
+
     "@tailwindcss/node@4.1.8":
         dependencies:
             "@ampproject/remapping": 2.3.0
@@ -2674,6 +2872,13 @@ snapshots:
             tailwindcss: 4.1.8
             vite: 6.3.5(@types/node@24.0.0)(jiti@2.4.2)(lightningcss@1.30.1)
 
+    "@tanstack/query-core@5.81.5": {}
+
+    "@tanstack/react-query@5.81.5(react@19.1.0)":
+        dependencies:
+            "@tanstack/query-core": 5.81.5
+            react: 19.1.0
+
     "@types/babel__core@7.20.5":
         dependencies:
             "@babel/parser": 7.27.5
@@ -2705,6 +2910,8 @@ snapshots:
         dependencies:
             undici-types: 7.8.0
 
+    "@types/phoenix@1.6.6": {}
+
     "@types/react-dom@19.1.6(@types/react@19.1.7)":
         dependencies:
             "@types/react": 19.1.7
@@ -2712,6 +2919,10 @@ snapshots:
     "@types/react@19.1.7":
         dependencies:
             csstype: 3.1.3
+
+    "@types/ws@8.18.1":
+        dependencies:
+            "@types/node": 24.0.0
 
     "@typescript-eslint/eslint-plugin@8.34.0(@typescript-eslint/parser@8.34.0(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)":
         dependencies:
@@ -2884,6 +3095,8 @@ snapshots:
     concat-map@0.0.1: {}
 
     convert-source-map@2.0.0: {}
+
+    cookie@1.0.2: {}
 
     cross-spawn@7.0.6:
         dependencies:
@@ -3107,6 +3320,10 @@ snapshots:
 
     isexe@2.0.0: {}
 
+    isows@1.0.7(ws@8.18.3):
+        dependencies:
+            ws: 8.18.3
+
     jiti@2.4.2: {}
 
     js-tokens@4.0.0: {}
@@ -3280,6 +3497,20 @@ snapshots:
 
     react-refresh@0.17.0: {}
 
+    react-router-dom@7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+        dependencies:
+            react: 19.1.0
+            react-dom: 19.1.0(react@19.1.0)
+            react-router: 7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+
+    react-router@7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+        dependencies:
+            cookie: 1.0.2
+            react: 19.1.0
+            set-cookie-parser: 2.7.1
+        optionalDependencies:
+            react-dom: 19.1.0(react@19.1.0)
+
     react@19.1.0: {}
 
     resolve-from@4.0.0: {}
@@ -3322,6 +3553,8 @@ snapshots:
 
     semver@7.7.2: {}
 
+    set-cookie-parser@2.7.1: {}
+
     shebang-command@2.0.0:
         dependencies:
             shebang-regex: 3.0.0
@@ -3359,6 +3592,8 @@ snapshots:
     to-regex-range@5.0.1:
         dependencies:
             is-number: 7.0.0
+
+    tr46@0.0.3: {}
 
     ts-api-utils@2.1.0(typescript@5.8.3):
         dependencies:
@@ -3408,11 +3643,20 @@ snapshots:
             jiti: 2.4.2
             lightningcss: 1.30.1
 
+    webidl-conversions@3.0.1: {}
+
+    whatwg-url@5.0.0:
+        dependencies:
+            tr46: 0.0.3
+            webidl-conversions: 3.0.1
+
     which@2.0.2:
         dependencies:
             isexe: 2.0.0
 
     word-wrap@1.2.5: {}
+
+    ws@8.18.3: {}
 
     yallist@3.1.1: {}
 
