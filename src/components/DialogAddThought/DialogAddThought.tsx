@@ -14,7 +14,9 @@ const DialogAddThought = () => {
 	return (
 		<>
 			<Dialog>
-				<DialogTrigger>Open Dialog</DialogTrigger>
+				<DialogTrigger asChild>
+					<Button>Ajouter une pensée</Button>
+				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>Ajouter une pensée</DialogTitle>
