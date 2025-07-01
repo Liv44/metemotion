@@ -163,8 +163,12 @@ export default function FeelingsVisualisation() {
 				feelings: dayFeelings,
 				count: dayFeelings.length,
 				dominantMood,
-				color: (dominantMood && HUMOR_COLORS[dominantMood as keyof typeof HUMOR_COLORS])
-					|| "#E5E7EB",
+				color:
+					(dominantMood &&
+						HUMOR_COLORS[
+							dominantMood as keyof typeof HUMOR_COLORS
+						]) ||
+					"#E5E7EB",
 				moodCounts,
 				isToday: i === 0,
 			});
@@ -244,7 +248,10 @@ export default function FeelingsVisualisation() {
 															className="w-4 h-4 rounded-full flex-shrink-0 mt-1"
 															style={{
 																backgroundColor:
-																	HUMOR_COLORS[feeling.humor],
+																	HUMOR_COLORS[
+																		feeling
+																			.humor
+																	],
 															}}
 															aria-hidden="true"
 														/>
@@ -255,7 +262,10 @@ export default function FeelingsVisualisation() {
 																<h3
 																	className="font-medium text-sm md:text-base truncate"
 																	style={{
-																		color: HUMOR_COLORS[feeling.humor],
+																		color: HUMOR_COLORS[
+																			feeling
+																				.humor
+																		],
 																	}}
 																>
 																	{
@@ -527,7 +537,10 @@ export default function FeelingsVisualisation() {
 																		className="rounded-sm"
 																		style={{
 																			backgroundColor:
-																				HUMOR_COLORS?.[mood as keyof typeof HUMOR_COLORS] ?? "#E5E7EB",
+																				HUMOR_COLORS?.[
+																					mood as keyof typeof HUMOR_COLORS
+																				] ??
+																				"#E5E7EB",
 																			width: `${percentage}%`,
 																		}}
 																		title={`${mood}: ${count}`}
