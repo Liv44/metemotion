@@ -34,13 +34,30 @@ export type Database = {
 	};
 	public: {
 		Tables: {
+			color: {
+				Row: {
+					hexa: string | null;
+					id: string;
+					label: string | null;
+				};
+				Insert: {
+					hexa?: string | null;
+					id?: string;
+					label?: string | null;
+				};
+				Update: {
+					hexa?: string | null;
+					id?: string;
+					label?: string | null;
+				};
+				Relationships: [];
+			};
 			feeling: {
 				Row: {
 					color: string | null;
 					created_at: string;
 					humor: Database["public"]["Enums"]["HUMOR"];
 					id: string;
-					imgLink: string | null;
 					keywords: string[];
 				};
 				Insert: {
@@ -48,7 +65,6 @@ export type Database = {
 					created_at?: string;
 					humor: Database["public"]["Enums"]["HUMOR"];
 					id?: string;
-					imgLink?: string | null;
 					keywords: string[];
 				};
 				Update: {
@@ -56,10 +72,17 @@ export type Database = {
 					created_at?: string;
 					humor?: Database["public"]["Enums"]["HUMOR"];
 					id?: string;
-					imgLink?: string | null;
 					keywords?: string[];
 				};
-				Relationships: [];
+				Relationships: [
+					{
+						foreignKeyName: "feeling_color_fkey";
+						columns: ["color"];
+						isOneToOne: false;
+						referencedRelation: "color";
+						referencedColumns: ["id"];
+					},
+				];
 			};
 			thought: {
 				Row: {

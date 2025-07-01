@@ -1,7 +1,7 @@
 import type { Feeling } from "@/domain/Feeling";
 import { Feelings } from "@/domain/mappers";
 import { supabase } from "@/utils/supabase";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface CreateFeelingPayload {
 	humor: "JOIE" | "TRISTESSE" | "COLÈRE" | "PEUR" | "SURPRISE";
@@ -11,11 +11,10 @@ interface CreateFeelingPayload {
 }
 
 const useCreateFeelings = () => {
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationKey: ["create-feeling"],
-		mutationFn: async (
-			payload: CreateFeelingPayload
-		): Promise<Feeling[]> => {
+		mutationFn: async (payload: CreateFeelingPayload): Promise<Feeling> => {
 			const { data, error } = await supabase
 				.from("feeling")
 				.insert(payload)
@@ -23,7 +22,12 @@ const useCreateFeelings = () => {
 			if (error || !data) {
 				throw error;
 			}
-			return data.map(Feelings.toDomain);
+			return Feelings.toDomain(data[0]);
+		},
+		onSuccess: async newFeeling => {
+			queryClient.setQueryData(["feelings"], (prev: Feeling[]) =>
+				prev ? [...prev, newFeeling] : [newFeeling]
+			);
 		},
 	});
 };

@@ -12,7 +12,7 @@ const Thoughts = {
 		return {
 			id: t.id,
 			text: t.text,
-			createdAt: t.created_at,
+			createdAt: new Date(t.created_at),
 		};
 	},
 };
@@ -21,19 +21,25 @@ const Feelings = {
 	toDomain: (feeling: unknown): Feeling => {
 		const f = feeling as {
 			id: string;
-			color: string;
+			color: {
+				id: string;
+				label: string;
+				hexa: string;
+			};
 			created_at: string;
 			humor: string;
-			imgLink: string;
 			keywords: string[];
 		};
 
 		return {
 			id: f.id,
-			color: f.color,
-			createdAt: f.created_at,
+			color: {
+				id: f.color.id,
+				name: f.color.label,
+				hex: f.color.hexa,
+			},
+			createdAt: new Date(f.created_at),
 			humor: f.humor as Humor,
-			imgLink: f.imgLink,
 			keywords: f.keywords,
 		};
 	},

@@ -14,7 +14,7 @@ const useCreateThought = () => {
 		mutationKey: ["create-thought"],
 		mutationFn: async (
 			payload: CreateConversationPayload = { text: "" }
-		): Promise<Thought[]> => {
+		): Promise<Thought> => {
 			const { data, error } = await supabase
 				.from("thought")
 				.insert({
@@ -24,7 +24,7 @@ const useCreateThought = () => {
 			if (error || !data) {
 				throw error;
 			}
-			return data.map(Thoughts.toDomain);
+			return Thoughts.toDomain(data[0]);
 		},
 		onSuccess: async newThought => {
 			queryClient.setQueryData(["thoughts"], (prev: Thought[]) =>

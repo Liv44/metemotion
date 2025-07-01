@@ -2,8 +2,8 @@ import { Thoughts } from "@/domain/mappers";
 import { supabase } from "@/utils/supabase";
 import { useQuery } from "@tanstack/react-query";
 
-const useGetThoughts = () => {
-	return useQuery({
+const useThoughts = () => {
+	const { data: thoughts, ...rest } = useQuery({
 		queryKey: ["thoughts"],
 		queryFn: async () => {
 			const { data, error } = await supabase.from("thought").select();
@@ -13,6 +13,8 @@ const useGetThoughts = () => {
 			return data.map(Thoughts.toDomain);
 		},
 	});
+
+	return { thoughts, ...rest };
 };
 
-export default useGetThoughts;
+export default useThoughts;
