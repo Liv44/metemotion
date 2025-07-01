@@ -23,7 +23,7 @@ const DialogAddThought = () => {
 						<DialogDescription>
 							Quelle est ta pensée du jour ?
 						</DialogDescription>
-						<Textarea />
+						<Textarea/>
 					</DialogHeader>
 					<DialogFooter>
 						<Button type="submit">Envoyer</Button>
