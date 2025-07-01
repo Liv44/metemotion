@@ -31,7 +31,7 @@ jobs:
             - name: Poster ou mettre à jour le commentaire PR
               uses: actions/github-script@v7
               with:
-                  github-token: ${{ secrets.GB_TOKEN }}
+                  github-token: ${{ secrets.GH_TOKEN }}
 
                   script: |
                       const fs = require('fs');
