@@ -13,7 +13,7 @@ import { useState } from "react";
 import useCreateThought from "@/usecases/useCreateThought";
 
 const DialogAddThought = () => {
-	const {mutate: createThought} = useCreateThought()
+	const { mutate: createThought } = useCreateThought();
 
 	const [thought, setThought] = useState("");
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -29,7 +29,7 @@ const DialogAddThought = () => {
 
 	function submitForm() {
 		setThought("");
-		createThought({ text: thought })
+		createThought({ text: thought });
 	}
 
 	return (
