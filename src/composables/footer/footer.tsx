@@ -30,21 +30,21 @@ export const Footer: React.FC = () => {
 					label: "Notre mission",
 					href: "/about",
 					icon: Info,
-					description: "Découvrir notre mission et nos valeurs"
+					description: "Découvrir notre mission et nos valeurs",
 				},
 				{
 					label: "Équipe",
 					href: "/team",
 					icon: Users,
-					description: "Rencontrer notre équipe et nos experts"
+					description: "Rencontrer notre équipe et nos experts",
 				},
 				{
 					label: "Blog",
 					href: "/blog",
 					icon: BookOpen,
-					description: "Lire nos articles sur le bien-être mental"
-				}
-			]
+					description: "Lire nos articles sur le bien-être mental",
+				},
+			],
 		},
 		{
 			title: "Légal",
@@ -53,20 +53,21 @@ export const Footer: React.FC = () => {
 					label: "Politique de confidentialité",
 					href: "/privacy",
 					icon: Shield,
-					description: "Consulter notre politique de protection des données personnelles"
+					description:
+						"Consulter notre politique de protection des données personnelles",
 				},
 				{
 					label: "Conditions d'utilisation",
 					href: "/terms",
-					description: "Lire nos conditions générales d'utilisation"
+					description: "Lire nos conditions générales d'utilisation",
 				},
 				{
 					label: "Mentions légales",
 					href: "/legal",
-					description: "Consulter nos mentions légales obligatoires"
-				}
-			]
-		}
+					description: "Consulter nos mentions légales obligatoires",
+				},
+			],
+		},
 	];
 
 	const socialLinks: FooterLink[] = [
@@ -74,12 +75,15 @@ export const Footer: React.FC = () => {
 			label: "Envoyer mail",
 			href: "mailto:contact@metemotion.fr",
 			icon: Mail,
-			description: "Nous contacter par email à l'adresse contact@metemotion.fr",
-			external: true
-		}
+			description:
+				"Nous contacter par email à l'adresse contact@metemotion.fr",
+			external: true,
+		},
 	];
 
-	const FooterSection: React.FC<{ section: FooterSection }> = ({ section }) => {
+	const FooterSection: React.FC<{ section: FooterSection }> = ({
+		section,
+	}) => {
 		const sectionId = useId();
 
 		return (
@@ -96,39 +100,43 @@ export const Footer: React.FC = () => {
 					aria-label={`Navigation ${section.title.toLowerCase()}`}
 				>
 					<ul className="space-y-3" role="list">
-						{section.links.map((link) => {
+						{section.links.map(link => {
 							const IconComponent = link.icon;
-							const isExternal = link.external || link.href.startsWith('http') || link.href.startsWith('mailto:');
+							const isExternal =
+								link.external ||
+								link.href.startsWith("http") ||
+								link.href.startsWith("mailto:");
 
 							return (
 								<li key={link.href}>
 									<a
-									href={link.href}
-									className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-1 py-1"
-									aria-label={link.description || link.label}
-									{...(isExternal && {
-										target: "_blank",
-										rel: "noopener noreferrer"
-									})}
+										href={link.href}
+										className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-1 py-1"
+										aria-label={
+											link.description || link.label
+										}
+										{...(isExternal && {
+											target: "_blank",
+											rel: "noopener noreferrer",
+										})}
 									>
-									{IconComponent && (
-										<IconComponent
-											className="mr-2 h-4 w-4 flex-shrink-0"
-											aria-hidden="true"
-										/>
-									)}
-									<span>{link.label}</span>
-									{isExternal && (
-										<span className="sr-only">
-												{link.href.startsWith('mailto:')
-													? ' (ouvre votre client email)'
-													: ' (ouvre dans un nouvel onglet)'
-												}
-										</span>
-									)}
-								</a>
-						</li>
-						);
+										{IconComponent && (
+											<IconComponent
+												className="mr-2 h-4 w-4 flex-shrink-0"
+												aria-hidden="true"
+											/>
+										)}
+										<span>{link.label}</span>
+										{isExternal && (
+											<span className="sr-only">
+												{link.href.startsWith("mailto:")
+													? " (ouvre votre client email)"
+													: " (ouvre dans un nouvel onglet)"}
+											</span>
+										)}
+									</a>
+								</li>
+							);
 						})}
 					</ul>
 				</nav>
@@ -151,7 +159,10 @@ export const Footer: React.FC = () => {
 				{/* Contenu principal du footer */}
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
 					{/* Branding et description */}
-					<section className="space-y-4 lg:col-span-2" aria-labelledby={brandingId}>
+					<section
+						className="space-y-4 lg:col-span-2"
+						aria-labelledby={brandingId}
+					>
 						<h3 id={brandingId} className="sr-only">
 							À propos de MetÉmotion
 						</h3>
@@ -167,8 +178,9 @@ export const Footer: React.FC = () => {
 						</div>
 
 						<p className="text-sm text-muted-foreground max-w-md leading-relaxed">
-							Votre compagnon pour explorer et comprendre vos émotions.
-							Créez et partagez votre journal émotionnel personnalisé et développez votre bien-être mental.
+							Votre compagnon pour explorer et comprendre vos
+							émotions. Créez et partagez votre journal émotionnel
+							personnalisé et développez votre bien-être mental.
 						</p>
 
 						{/* Contact */}
@@ -177,9 +189,12 @@ export const Footer: React.FC = () => {
 								Contact
 							</h4>
 							<div className="flex flex-wrap gap-2">
-								{socialLinks.map((link) => {
+								{socialLinks.map(link => {
 									const IconComponent = link.icon;
-									const isExternal = link.external || link.href.startsWith('http') || link.href.startsWith('mailto:');
+									const isExternal =
+										link.external ||
+										link.href.startsWith("http") ||
+										link.href.startsWith("mailto:");
 
 									return (
 										<Button
@@ -189,39 +204,43 @@ export const Footer: React.FC = () => {
 											asChild
 											className="hover:bg-primary hover:text-primary-foreground transition-colors duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2"
 										>
-										<a
-											href={link.href}
-											aria-label={link.description || link.label}
-											{...(isExternal && {
-												target: "_blank",
-												rel: "noopener noreferrer"
-											})}
+											<a
+												href={link.href}
+												aria-label={
+													link.description ||
+													link.label
+												}
+												{...(isExternal && {
+													target: "_blank",
+													rel: "noopener noreferrer",
+												})}
 											>
-											{IconComponent && (
-												<IconComponent
-													className="mr-2 h-4 w-4"
-													aria-hidden="true"
-												/>
-											)}
-											{link.label}
-											{isExternal && (
-												<span className="sr-only">
-														{link.href.startsWith('mailto:')
-															? ' (ouvre votre client email)'
-															: ' (ouvre dans un nouvel onglet)'
-														}
+												{IconComponent && (
+													<IconComponent
+														className="mr-2 h-4 w-4"
+														aria-hidden="true"
+													/>
+												)}
+												{link.label}
+												{isExternal && (
+													<span className="sr-only">
+														{link.href.startsWith(
+															"mailto:"
+														)
+															? " (ouvre votre client email)"
+															: " (ouvre dans un nouvel onglet)"}
 													</span>
-											)}
-										</a>
-								</Button>
-								);
+												)}
+											</a>
+										</Button>
+									);
 								})}
 							</div>
 						</div>
 					</section>
 
 					{/* Sections de liens */}
-					{footerSections.map((section) => (
+					{footerSections.map(section => (
 						<FooterSection key={section.title} section={section} />
 					))}
 				</div>
@@ -236,10 +255,12 @@ export const Footer: React.FC = () => {
 				{/* Copyright et mentions */}
 				<div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
 					<p role="contentinfo">
-						<span aria-label={`Copyright ${currentYear} MetÉmotion`}>
+						<span
+							aria-label={`Copyright ${currentYear} MetÉmotion`}
+						>
 							© {currentYear} MetÉmotion.
-						</span>
-						{" "}Tous droits réservés.
+						</span>{" "}
+						Tous droits réservés.
 					</p>
 					<p className="text-center sm:text-right">
 						Fait avec{" "}
@@ -255,12 +276,12 @@ export const Footer: React.FC = () => {
 
 			{/* Skip link pour remonter en haut */}
 			<a
-			href="#top"
-			className="sr-only focus:not-sr-only focus:fixed focus:bottom-4 focus:right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-lg"
-			aria-label="Retour en haut de la page"
+				href="#top"
+				className="sr-only focus:not-sr-only focus:fixed focus:bottom-4 focus:right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-lg"
+				aria-label="Retour en haut de la page"
 			>
-			↑ Retour en haut
-		</a>
-</footer>
-);
+				↑ Retour en haut
+			</a>
+		</footer>
+	);
 };
