@@ -27,15 +27,14 @@ const getStats = (feelingsData: Feeling[]) => {
 	const mostCommonMood =
 		Object.keys(moodCounts).length > 0
 			? Object.keys(moodCounts).reduce((a, b) =>
-				moodCounts[a] > moodCounts[b] ? a : b
-			)
+					moodCounts[a] > moodCounts[b] ? a : b
+				)
 			: "Aucune";
 
 	return { total, today, mostCommonMood };
 };
 
 function TodaysTab({ feelings }: { feelings: Feeling[] }) {
-
 	// Filter feelings for today only
 	const todaysFeelings = feelings.filter(feeling => {
 		const today = new Date();
@@ -76,7 +75,9 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 												className="w-4 h-4 rounded-full flex-shrink-0 mt-1"
 												style={{
 													backgroundColor:
-														HUMOR_COLORS[feeling.humor],
+														HUMOR_COLORS[
+															feeling.humor
+														],
 												}}
 												aria-hidden="true"
 											/>
@@ -87,7 +88,9 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 													<h3
 														className="font-medium text-sm md:text-base truncate"
 														style={{
-															color: HUMOR_COLORS[feeling.humor],
+															color: HUMOR_COLORS[
+																feeling.humor
+															],
 														}}
 													>
 														{feeling.humor}
@@ -142,7 +145,8 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 										<div className="space-y-1">
 											<p>
 												<strong>
-													Humeur dominante aujourd'hui:
+													Humeur dominante
+													aujourd'hui:
 												</strong>{" "}
 												{todaysStats.mostCommonMood}
 											</p>
@@ -158,7 +162,8 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 										</div>
 									) : (
 										<p className="text-gray-400 italic">
-											Aucun ressenti enregistré aujourd'hui
+											Aucun ressenti enregistré
+											aujourd'hui
 										</p>
 									)}
 								</div>
@@ -183,9 +188,7 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 	);
 }
 
-function MoodTab({ feelings }: { feelings: Feeling[]} ) {
-
-
+function MoodTab({ feelings }: { feelings: Feeling[] }) {
 	// Helper function to get feelings by mood
 	const getFeelingsByMood = (feelingsData: Feeling[]) => {
 		const moodCounts: Record<string, { count: number; color: string }> = {};
@@ -230,22 +233,18 @@ function MoodTab({ feelings }: { feelings: Feeling[]} ) {
 					{/* Mobile: single column, Desktop: 2 columns for mood bars */}
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6">
 						{feelingsByMood.map(moodData => (
-							<div
-								key={moodData.mood}
-								className="space-y-2"
-							>
+							<div key={moodData.mood} className="space-y-2">
 								<div className="flex items-center justify-between">
 									<div className="flex items-center gap-2 min-w-0 flex-1">
 										<div
 											className="w-4 h-4 rounded-full flex-shrink-0"
 											style={{
-												backgroundColor:
-												moodData.color,
+												backgroundColor: moodData.color,
 											}}
 										/>
 										<span className="font-medium text-sm md:text-base truncate">
-														{moodData.mood}
-													</span>
+											{moodData.mood}
+										</span>
 									</div>
 									<div className="text-xs md:text-sm text-gray-600 whitespace-nowrap ml-2">
 										{moodData.count} fois (
@@ -257,8 +256,7 @@ function MoodTab({ feelings }: { feelings: Feeling[]} ) {
 									<div
 										className="h-2 md:h-3 rounded-full transition-all duration-300"
 										style={{
-											backgroundColor:
-											moodData.color,
+											backgroundColor: moodData.color,
 											width: `${moodData.percentage}%`,
 										}}
 									/>
@@ -270,20 +268,16 @@ function MoodTab({ feelings }: { feelings: Feeling[]} ) {
 					<div className="mt-4 md:mt-6 p-3 md:p-4 bg-light-purple/10 rounded-lg">
 						<div className="text-sm text-foreground space-y-1">
 							<p>
-								<strong>
-									Total des ressentis:
-								</strong>{" "}
+								<strong>Total des ressentis:</strong>{" "}
 								{stats.total}
 							</p>
 							<p>
-								<strong>Aujourd'hui:</strong>{" "}
-								{stats.today} ressenti
+								<strong>Aujourd'hui:</strong> {stats.today}{" "}
+								ressenti
 								{stats.today > 1 ? "s" : ""}
 							</p>
 							<p>
-								<strong>
-									Humeur la plus fréquente:
-								</strong>{" "}
+								<strong>Humeur la plus fréquente:</strong>{" "}
 								{stats.mostCommonMood}
 							</p>
 						</div>
@@ -291,11 +285,10 @@ function MoodTab({ feelings }: { feelings: Feeling[]} ) {
 				</CardContent>
 			</Card>
 		</div>
-	)
+	);
 }
 
-function TrendTabs({feelings}: { feelings: Feeling[] }) {
-
+function TrendTabs({ feelings }: { feelings: Feeling[] }) {
 	const getFeelingsByDay = (feelingsData: Feeling[]) => {
 		const days = [];
 		const today = new Date();
@@ -332,8 +325,8 @@ function TrendTabs({feelings}: { feelings: Feeling[] }) {
 			const dominantMood =
 				Object.keys(moodCounts).length > 0
 					? Object.keys(moodCounts).reduce((a, b) =>
-						moodCounts[a] > moodCounts[b] ? a : b
-					)
+							moodCounts[a] > moodCounts[b] ? a : b
+						)
 					: null;
 
 			days.push({
@@ -347,7 +340,7 @@ function TrendTabs({feelings}: { feelings: Feeling[] }) {
 					(dominantMood &&
 						HUMOR_COLORS[
 							dominantMood as keyof typeof HUMOR_COLORS
-							]) ||
+						]) ||
 					"#E5E7EB",
 				moodCounts,
 				isToday: i === 0,
@@ -358,7 +351,7 @@ function TrendTabs({feelings}: { feelings: Feeling[] }) {
 	};
 
 	const feelingsByDay = getFeelingsByDay(feelings);
-	return(
+	return (
 		<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
 			<Card className="bg-white border-primary lg:col-span-2">
 				<CardHeader className="pb-4">
@@ -383,20 +376,19 @@ function TrendTabs({feelings}: { feelings: Feeling[] }) {
 							>
 								<div className="flex items-center justify-between mb-2">
 									<div className="flex items-center gap-2 min-w-0 flex-1">
-													<span className="font-medium text-sm md:text-base truncate">
-														{day.dayName}{" "}
-														{day.dayDate}
-														{day.isToday && (
-															<span className="text-primary text-xs ml-1">
-																(Aujourd'hui)
-															</span>
-														)}
-													</span>
+										<span className="font-medium text-sm md:text-base truncate">
+											{day.dayName} {day.dayDate}
+											{day.isToday && (
+												<span className="text-primary text-xs ml-1">
+													(Aujourd'hui)
+												</span>
+											)}
+										</span>
 									</div>
 									<span className="text-xs text-gray-500 whitespace-nowrap ml-2">
-													{day.count} ressenti
+										{day.count} ressenti
 										{day.count > 1 ? "s" : ""}
-												</span>
+									</span>
 								</div>
 
 								{day.count > 0 ? (
@@ -405,8 +397,7 @@ function TrendTabs({feelings}: { feelings: Feeling[] }) {
 											<div
 												className="w-3 h-3 rounded-full flex-shrink-0"
 												style={{
-													backgroundColor:
-													day.color,
+													backgroundColor: day.color,
 												}}
 											/>
 											<span
@@ -415,34 +406,29 @@ function TrendTabs({feelings}: { feelings: Feeling[] }) {
 													color: day.color,
 												}}
 											>
-															{day.dominantMood}
-														</span>
+												{day.dominantMood}
+											</span>
 											<span className="text-xs text-gray-500">
-															dominant
-														</span>
+												dominant
+											</span>
 										</div>
 
 										{/* Mini chart showing mood distribution */}
 										<div className="flex gap-1 h-2">
-											{Object.entries(
-												day.moodCounts
-											).map(
+											{Object.entries(day.moodCounts).map(
 												([mood, count]) => {
 													const percentage =
-														(count /
-															day.count) *
+														(count / day.count) *
 														100;
 													return (
 														<div
-															key={
-																mood
-															}
+															key={mood}
 															className="rounded-sm"
 															style={{
 																backgroundColor:
 																	HUMOR_COLORS?.[
 																		mood as keyof typeof HUMOR_COLORS
-																		] ??
+																	] ??
 																	"#E5E7EB",
 																width: `${percentage}%`,
 															}}
@@ -467,32 +453,23 @@ function TrendTabs({feelings}: { feelings: Feeling[] }) {
 							<p>
 								<strong>Jour le plus actif:</strong>{" "}
 								{
-									feelingsByDay.reduce(
-										(max, day) =>
-											day.count > max.count
-												? day
-												: max
+									feelingsByDay.reduce((max, day) =>
+										day.count > max.count ? day : max
 									).dayName
 								}{" "}
 								(
 								{
-									feelingsByDay.reduce(
-										(max, day) =>
-											day.count > max.count
-												? day
-												: max
+									feelingsByDay.reduce((max, day) =>
+										day.count > max.count ? day : max
 									).count
 								}{" "}
 								ressentis)
 							</p>
 							<p>
-								<strong>
-									Moyenne quotidienne:
-								</strong>{" "}
+								<strong>Moyenne quotidienne:</strong>{" "}
 								{Math.round(
 									feelingsByDay.reduce(
-										(sum, day) =>
-											sum + day.count,
+										(sum, day) => sum + day.count,
 										0
 									) / 7
 								)}{" "}
@@ -503,7 +480,7 @@ function TrendTabs({feelings}: { feelings: Feeling[] }) {
 				</CardContent>
 			</Card>
 		</div>
-	)
+	);
 }
 
 export default function FeelingsVisualisation() {
