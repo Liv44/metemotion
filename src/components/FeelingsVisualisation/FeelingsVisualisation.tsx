@@ -1,19 +1,14 @@
-import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-import mockData from '../../assets/mockData.js'
+import mockData from "../../assets/mockData.js";
 
 export default function FeelingsVisualisation() {
 	// Filter feelings for today only
@@ -23,43 +18,51 @@ export default function FeelingsVisualisation() {
 		return feelingDate.toDateString() === today.toDateString();
 	});
 
-	const feelingsByTimeOfDay = mockData.getFeelingsByTimeOfDay(todaysFeelings);
 	const feelingsByMood = mockData.getFeelingsByMood(mockData.feelings);
 	const stats = mockData.getStats(mockData.feelings);
 	const todaysStats = mockData.getStats(todaysFeelings);
 
 	// Function to get feelings by day over the last 7 days
-	const getFeelingsByDay = (feelings) => {
+	const getFeelingsByDay = feelings => {
 		const days = [];
 		const today = new Date();
-		
-		// Create array of last 7 days
+
+		// Create an array of last 7 days
 		for (let i = 6; i >= 0; i--) {
 			const date = new Date(today);
 			date.setDate(date.getDate() - i);
 			date.setHours(0, 0, 0, 0);
-			
-			const dayName = date.toLocaleDateString('fr-FR', { weekday: 'short' });
-			const dayDate = date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
-			
+
+			const dayName = date.toLocaleDateString("fr-FR", {
+				weekday: "short",
+			});
+			const dayDate = date.toLocaleDateString("fr-FR", {
+				day: "2-digit",
+				month: "2-digit",
+			});
+
 			// Filter feelings for this specific day
 			const dayFeelings = feelings.filter(feeling => {
 				const feelingDate = new Date(feeling.createdAt);
 				feelingDate.setHours(0, 0, 0, 0);
 				return feelingDate.getTime() === date.getTime();
 			});
-			
+
 			// Count moods for this day
 			const moodCounts = {};
 			dayFeelings.forEach(feeling => {
-				moodCounts[feeling.humor] = (moodCounts[feeling.humor] || 0) + 1;
+				moodCounts[feeling.humor] =
+					(moodCounts[feeling.humor] || 0) + 1;
 			});
-			
+
 			// Find dominant mood
-			const dominantMood = Object.keys(moodCounts).length > 0 
-				? Object.keys(moodCounts).reduce((a, b) => moodCounts[a] > moodCounts[b] ? a : b)
-				: null;
-			
+			const dominantMood =
+				Object.keys(moodCounts).length > 0
+					? Object.keys(moodCounts).reduce((a, b) =>
+							moodCounts[a] > moodCounts[b] ? a : b
+						)
+					: null;
+
 			days.push({
 				dayName,
 				dayDate,
@@ -67,232 +70,397 @@ export default function FeelingsVisualisation() {
 				feelings: dayFeelings,
 				count: dayFeelings.length,
 				dominantMood,
-				color: dominantMood ? mockData.feelings.find(f => f.humor === dominantMood)?.color : '#E5E7EB',
+				color: dominantMood
+					? mockData.feelings.find(f => f.humor === dominantMood)
+							?.color
+					: "#E5E7EB",
 				moodCounts,
-				isToday: i === 0
+				isToday: i === 0,
 			});
 		}
-		
+
 		return days;
 	};
 
 	const feelingsByDay = getFeelingsByDay(mockData.feelings);
 
 	return (
-		<div className="flex w-full max-w-sm flex-col gap-6">
-			<Tabs defaultValue="jour">
-				<TabsList className="grid w-full grid-cols-3">
-					<TabsTrigger value="jour">Aujourd'hui</TabsTrigger>
-					<TabsTrigger value="humeur">Par Humeur</TabsTrigger>
-					<TabsTrigger value="tendance">Tendances</TabsTrigger>
+		// Mobile: full width with padding, Desktop: constrained width
+		<div className="w-full max-w-none md:max-w-4xl lg:max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+			<Tabs defaultValue="jour" className="w-full">
+				{/* Mobile: stacked tabs, Desktop: horizontal tabs */}
+				<TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 h-auto sm:h-10 border-primary border-1 bg-light-purple/10 ">
+					<TabsTrigger
+						value="jour"
+						className="text-sm data-[state=active]:bg-dark-purple data-[state=active]:text-white"
+					>
+						Aujourd'hui
+					</TabsTrigger>
+					<TabsTrigger
+						value="humeur"
+						className="text-sm data-[state=active]:bg-dark-purple data-[state=active]:text-white
+"
+					>
+						Par Humeur
+					</TabsTrigger>
+					<TabsTrigger
+						value="tendance"
+						className="text-sm data-[state=active]:bg-dark-purple data-[state=active]:text-white
+"
+					>
+						Tendances
+					</TabsTrigger>
 				</TabsList>
-				
-				<TabsContent value="jour">
-					<Card className="bg-white border-primary">
-						<CardHeader>
-							<CardTitle>Météo intérieure d'aujourd'hui</CardTitle>
-							<CardDescription>
-								Les émotions par tranches horaires ({todaysStats.total} ressentis aujourd'hui)
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="grid gap-4">
-							{feelingsByTimeOfDay.length > 0 ? (
-								<>
-									{feelingsByTimeOfDay.map((timeSlot) => (
-										<div 
-											key={timeSlot.time}
-											className="flex items-center justify-between p-3 rounded-lg border"
-											style={{ borderLeft: `4px solid ${timeSlot.color}` }}
-										>
-											<div className="flex flex-col">
-												<span className="font-medium text-sm">{timeSlot.time}</span>
-												{timeSlot.count > 0 ? (
-													<span 
-														className="text-xs font-semibold"
-														style={{ color: timeSlot.color }}
+
+				<TabsContent value="jour" className="mt-4 md:mt-6">
+					{/* Mobile: single column, Desktop: can use grid if needed */}
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+						<Card className="bg-white border-primary lg:col-span-2">
+							<CardHeader className="pb-4">
+								<CardTitle className="text-lg md:text-xl">
+									Ressentis d'aujourd'hui
+								</CardTitle>
+								<CardDescription className="text-sm">
+									Liste des émotions partagées aujourd'hui (
+									{todaysFeelings.length} ressentis)
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								{todaysFeelings.length > 0 ? (
+									<>
+										{/* Liste des ressentis d'aujourd'hui */}
+										<ul className="space-y-3 md:space-y-4" role="list">
+											{todaysFeelings
+												.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+												.map((feeling, index) => (
+													<li
+														key={feeling.id || index}
+														className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-light-purple hover:bg-light-purple/5 transition-colors"
 													>
-														{timeSlot.mood}
-													</span>
+														{/* Couleur de l'humeur */}
+														<div
+															className="w-4 h-4 rounded-full flex-shrink-0 mt-1"
+															style={{
+																backgroundColor: feeling.color,
+															}}
+															aria-hidden="true"
+														/>
+														
+														<div className="flex-1 min-w-0">
+															{/* Humeur et heure */}
+															<div className="flex items-center justify-between mb-2">
+																<h3 
+																	className="font-medium text-sm md:text-base truncate"
+																	style={{ color: feeling.color }}
+																>
+																	{feeling.humor}
+																</h3>
+																<time 
+																	className="text-xs text-gray-500 whitespace-nowrap ml-2"
+																	dateTime={feeling.createdAt}
+																>
+																	{new Date(feeling.createdAt).toLocaleTimeString('fr-FR', {
+																		hour: '2-digit',
+																		minute: '2-digit'
+																	})}
+																</time>
+															</div>
+															
+															{/* Description du ressenti */}
+															{feeling.note && (
+																<p className="text-sm text-gray-700 mb-2 break-words">
+																	{feeling.note}
+																</p>
+															)}
+															
+															{/* Activité associée */}
+															{feeling.activity && (
+																<div className="flex items-center gap-1 text-xs text-gray-500">
+																	<span aria-hidden="true">📍</span>
+																	<span>Activité: {feeling.activity}</span>
+																</div>
+															)}
+														</div>
+													</li>
+												))}
+										</ul>
+
+										{/* Résumé de la journée */}
+										<div className="mt-4 md:mt-6 p-3 md:p-4 bg-light-purple/10 rounded-lg">
+											<div className="text-sm text-foreground">
+												{todaysStats.total > 0 ? (
+													<div className="space-y-1">
+														<p>
+															<strong>
+																Humeur dominante aujourd'hui:
+															</strong>{" "}
+															{todaysStats.mostCommonMood}
+														</p>
+														<p>
+															<strong>
+																Total aujourd'hui:
+															</strong>{" "}
+															{todaysStats.total}{" "}
+															ressenti
+															{todaysStats.total > 1 ? "s" : ""}
+														</p>
+													</div>
 												) : (
-													<span className="text-xs text-gray-400 italic">
-														Aucun ressenti
-													</span>
+													<p className="text-gray-400 italic">
+														Aucun ressenti enregistré aujourd'hui
+													</p>
 												)}
 											</div>
-											<div className="flex items-center gap-2">
-												{timeSlot.count > 0 && (
-													<div 
-														className="w-3 h-3 rounded-full"
-														style={{ backgroundColor: timeSlot.color }}
+										</div>
+									</>
+								) : (
+									<div className="text-center py-8 md:py-12">
+										<div className="text-gray-400 text-sm">
+											<p className="mb-2 text-2xl" aria-hidden="true">😊</p>
+											<p>
+												Aucun ressenti enregistré aujourd'hui
+											</p>
+											<p className="text-xs mt-1">
+												Commencez à enregistrer vos émotions !
+											</p>
+										</div>
+									</div>
+								)}
+							</CardContent>
+						</Card>
+					</div>
+				</TabsContent>
+
+				<TabsContent value="humeur" className="mt-4 md:mt-6">
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+						<Card className="bg-white border-primary lg:col-span-2">
+							<CardHeader className="pb-4">
+								<CardTitle className="text-lg md:text-xl">
+									Tendances des humeurs
+								</CardTitle>
+								<CardDescription className="text-sm">
+									Répartition des émotions sur 7 jours
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								{/* Mobile: single column, Desktop: 2 columns for mood bars */}
+								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6">
+									{feelingsByMood.map(moodData => (
+										<div
+											key={moodData.mood}
+											className="space-y-2"
+										>
+											<div className="flex items-center justify-between">
+												<div className="flex items-center gap-2 min-w-0 flex-1">
+													<div
+														className="w-4 h-4 rounded-full flex-shrink-0"
+														style={{
+															backgroundColor:
+																moodData.color,
+														}}
 													/>
-												)}
-												<span className="text-sm text-gray-600">
-													{timeSlot.count} ressenti{timeSlot.count > 1 ? 's' : ''}
-												</span>
+													<span className="font-medium text-sm md:text-base truncate">
+														{moodData.mood}
+													</span>
+												</div>
+												<div className="text-xs md:text-sm text-gray-600 whitespace-nowrap ml-2">
+													{moodData.count} fois (
+													{moodData.percentage}%)
+												</div>
+											</div>
+
+											<div className="w-full bg-gray-200 rounded-full h-2 md:h-3">
+												<div
+													className="h-2 md:h-3 rounded-full transition-all duration-300"
+													style={{
+														backgroundColor:
+															moodData.color,
+														width: `${moodData.percentage}%`,
+													}}
+												/>
 											</div>
 										</div>
 									))}
-									
-									<div className="mt-4 p-3 bg-gray-50 rounded-lg">
-										<div className="text-sm text-gray-600">
-											{todaysStats.total > 0 ? (
-												<>
-													<p><strong>Humeur dominante aujourd'hui:</strong> {todaysStats.mostCommonMood}</p>
-													<p><strong>Total aujourd'hui:</strong> {todaysStats.total} ressenti{todaysStats.total > 1 ? 's' : ''}</p>
-												</>
-											) : (
-												<p className="text-gray-400 italic">Aucun ressenti enregistré aujourd'hui</p>
-											)}
-										</div>
-									</div>
-								</>
-							) : (
-								<div className="text-center py-8">
-									<div className="text-gray-400 text-sm">
-										<p className="mb-2">😊</p>
-										<p>Aucun ressenti enregistré aujourd'hui</p>
-										<p className="text-xs mt-1">Commencez à enregistrer vos émotions !</p>
+								</div>
+
+								{/*<div className="mt-4 md:mt-6 p-3 md:p-4 bg-gray-50 rounded-lg">*/}
+								{/*	<div className="text-sm text-gray-600 space-y-1">*/}
+								<div className="mt-4 md:mt-6 p-3 md:p-4 bg-light-purple/10 rounded-lg">
+									<div className="text-sm text-foreground space-y-1">
+										<p>
+											<strong>
+												Total des ressentis:
+											</strong>{" "}
+											{stats.total}
+										</p>
+										<p>
+											<strong>Aujourd'hui:</strong>{" "}
+											{stats.today} ressenti
+											{stats.today > 1 ? "s" : ""}
+										</p>
+										<p>
+											<strong>
+												Humeur la plus fréquente:
+											</strong>{" "}
+											{stats.mostCommonMood}
+										</p>
 									</div>
 								</div>
-							)}
-						</CardContent>
-					</Card>
-				</TabsContent>
-				
-				<TabsContent value="humeur">
-					<Card className="bg-white border-primary">
-						<CardHeader>
-							<CardTitle>Tendances des humeurs</CardTitle>
-							<CardDescription>
-								Répartition des émotions sur 7 jours
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="grid gap-4">
-							{feelingsByMood.map((moodData) => (
-								<div key={moodData.mood} className="space-y-2">
-									<div className="flex items-center justify-between">
-										<div className="flex items-center gap-2">
-											<div 
-												className="w-4 h-4 rounded-full"
-												style={{ backgroundColor: moodData.color }}
-											/>
-											<span className="font-medium">{moodData.mood}</span>
-										</div>
-										<div className="text-sm text-gray-600">
-											{moodData.count} fois ({moodData.percentage}%)
-										</div>
-									</div>
-									
-									<div className="w-full bg-gray-200 rounded-full h-2">
-										<div 
-											className="h-2 rounded-full transition-all duration-300"
-											style={{ 
-												backgroundColor: moodData.color,
-												width: `${moodData.percentage}%`
-											}}
-										/>
-									</div>
-								</div>
-							))}
-							
-							<div className="mt-4 p-3 bg-gray-50 rounded-lg">
-								<div className="text-sm text-gray-600 space-y-1">
-									<p><strong>Total des ressentis:</strong> {stats.total}</p>
-									<p><strong>Aujourd'hui:</strong> {stats.today} ressenti{stats.today > 1 ? 's' : ''}</p>
-									<p><strong>Humeur la plus fréquente:</strong> {stats.mostCommonMood}</p>
-								</div>
-							</div>
-						</CardContent>
-					</Card>
+							</CardContent>
+						</Card>
+					</div>
 				</TabsContent>
 
-				<TabsContent value="tendance">
-					<Card className="bg-white border-primary">
-						<CardHeader>
-							<CardTitle>Évolution sur 7 jours</CardTitle>
-							<CardDescription>
-								Tendances émotionnelles jour par jour
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="grid gap-3">
-							{feelingsByDay.map((day) => (
-								<div 
-									key={day.dayDate}
-									className={`p-3 rounded-lg border ${day.isToday ? 'border-primary bg-primary/5' : 'border-gray-200'}`}
-								>
-									<div className="flex items-center justify-between mb-2">
-										<div className="flex items-center gap-2">
-											<span className="font-medium text-sm">
-												{day.dayName} {day.dayDate}
-												{day.isToday && <span className="text-primary text-xs ml-1">(Aujourd'hui)</span>}
-											</span>
-										</div>
-										<span className="text-xs text-gray-500">
-											{day.count} ressenti{day.count > 1 ? 's' : ''}
-										</span>
-									</div>
-									
-									{day.count > 0 ? (
-										<div className="space-y-2">
-											<div className="flex items-center gap-2">
-												<div 
-													className="w-3 h-3 rounded-full"
-													style={{ backgroundColor: day.color }}
-												/>
-												<span 
-													className="text-sm font-medium"
-													style={{ color: day.color }}
-												>
-													{day.dominantMood}
+				<TabsContent value="tendance" className="mt-4 md:mt-6">
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+						<Card className="bg-white border-primary lg:col-span-2">
+							<CardHeader className="pb-4">
+								<CardTitle className="text-lg md:text-xl">
+									Évolution sur 7 jours
+								</CardTitle>
+								<CardDescription className="text-sm">
+									Tendances émotionnelles jour par jour
+								</CardDescription>
+							</CardHeader>
+							<CardContent>
+								{/* Mobile: single column, Desktop: 2 columns for day cards */}
+								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3 md:gap-4">
+									{feelingsByDay.map(day => (
+										<div
+											key={day.dayDate}
+											className={`p-3 md:p-4 rounded-lg border ${day.isToday ? "border-primary bg-primary/5" : "border-light-purple"}`}
+										>
+											<div className="flex items-center justify-between mb-2">
+												<div className="flex items-center gap-2 min-w-0 flex-1">
+													<span className="font-medium text-sm md:text-base truncate">
+														{day.dayName}{" "}
+														{day.dayDate}
+														{day.isToday && (
+															<span className="text-primary text-xs ml-1">
+																(Aujourd'hui)
+															</span>
+														)}
+													</span>
+												</div>
+												<span className="text-xs text-gray-500 whitespace-nowrap ml-2">
+													{day.count} ressenti
+													{day.count > 1 ? "s" : ""}
 												</span>
-												<span className="text-xs text-gray-500">dominant</span>
 											</div>
-											
-											{/* Mini chart showing mood distribution */}
-											<div className="flex gap-1 h-2">
-												{Object.entries(day.moodCounts).map(([mood, count]) => {
-													const feeling = mockData.feelings.find(f => f.humor === mood);
-													const percentage = (count / day.count) * 100;
-													return (
+
+											{day.count > 0 ? (
+												<div className="space-y-2">
+													<div className="flex items-center gap-2">
 														<div
-															key={mood}
-															className="rounded-sm"
+															className="w-3 h-3 rounded-full flex-shrink-0"
 															style={{
-																backgroundColor: feeling?.color || '#E5E7EB',
-																width: `${percentage}%`
+																backgroundColor:
+																	day.color,
 															}}
-															title={`${mood}: ${count}`}
 														/>
-													);
-												})}
-											</div>
+														<span
+															className="text-sm font-medium truncate"
+															style={{
+																color: day.color,
+															}}
+														>
+															{day.dominantMood}
+														</span>
+														<span className="text-xs text-gray-500">
+															dominant
+														</span>
+													</div>
+
+													{/* Mini chart showing mood distribution */}
+													<div className="flex gap-1 h-2">
+														{Object.entries(
+															day.moodCounts
+														).map(
+															([mood, count]) => {
+																const feeling =
+																	mockData.feelings.find(
+																		f =>
+																			f.humor ===
+																			mood
+																	);
+																const percentage =
+																	(count /
+																		day.count) *
+																	100;
+																return (
+																	<div
+																		key={
+																			mood
+																		}
+																		className="rounded-sm"
+																		style={{
+																			backgroundColor:
+																				feeling?.color ||
+																				"#E5E7EB",
+																			width: `${percentage}%`,
+																		}}
+																		title={`${mood}: ${count}`}
+																	/>
+																);
+															}
+														)}
+													</div>
+												</div>
+											) : (
+												<div className="text-xs text-gray-400 italic">
+													Aucun ressenti enregistré
+												</div>
+											)}
 										</div>
-									) : (
-										<div className="text-xs text-gray-400 italic">
-											Aucun ressenti enregistré
-										</div>
-									)}
+									))}
 								</div>
-							))}
-							
-							<div className="mt-4 p-3 bg-gray-50 rounded-lg">
-								<div className="text-sm text-gray-600 space-y-1">
-									<p><strong>Jour le plus actif:</strong> {
-										feelingsByDay.reduce((max, day) => 
-											day.count > max.count ? day : max
-										).dayName
-									} ({feelingsByDay.reduce((max, day) => 
-										day.count > max.count ? day : max
-									).count} ressentis)</p>
-									<p><strong>Moyenne quotidienne:</strong> {
-										Math.round(feelingsByDay.reduce((sum, day) => sum + day.count, 0) / 7)
-									} ressentis</p>
+
+								{/*<div className="mt-4 md:mt-6 p-3 md:p-4 bg-gray-50 rounded-lg">*/}
+								{/*	<div className="text-sm text-gray-600 space-y-1">*/}
+
+								<div className="mt-4 md:mt-6 p-3 md:p-4 bg-light-purple/10 rounded-lg">
+									<div className="text-sm text-foreground space-y-1">
+										<p>
+											<strong>Jour le plus actif:</strong>{" "}
+											{
+												feelingsByDay.reduce(
+													(max, day) =>
+														day.count > max.count
+															? day
+															: max
+												).dayName
+											}{" "}
+											(
+											{
+												feelingsByDay.reduce(
+													(max, day) =>
+														day.count > max.count
+															? day
+															: max
+												).count
+											}{" "}
+											ressentis)
+										</p>
+										<p>
+											<strong>
+												Moyenne quotidienne:
+											</strong>{" "}
+											{Math.round(
+												feelingsByDay.reduce(
+													(sum, day) =>
+														sum + day.count,
+													0
+												) / 7
+											)}{" "}
+											ressentis
+										</p>
+									</div>
 								</div>
-							</div>
-						</CardContent>
-					</Card>
+							</CardContent>
+						</Card>
+					</div>
 				</TabsContent>
 			</Tabs>
 		</div>
-	)
+	);
 }
