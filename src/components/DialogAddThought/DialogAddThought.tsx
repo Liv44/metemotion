@@ -1,12 +1,12 @@
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
@@ -20,8 +20,10 @@ const DialogAddThought = () => {
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>Ajouter une pensée</DialogTitle>
-						<DialogDescription>Quelle est ta pensée du jour ?</DialogDescription>
-						<Textarea/>
+						<DialogDescription>
+							Quelle est ta pensée du jour ?
+						</DialogDescription>
+						<Textarea />
 					</DialogHeader>
 					<DialogFooter>
 						<Button type="submit">Envoyer</Button>
@@ -29,7 +31,7 @@ const DialogAddThought = () => {
 				</DialogContent>
 			</Dialog>
 		</>
-	)
+	);
 };
 
 export default DialogAddThought;
