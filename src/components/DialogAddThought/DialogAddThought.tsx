@@ -10,8 +10,11 @@ import {
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { useState } from "react";
+import useCreateThought from "@/usecases/useCreateThought";
 
 const DialogAddThought = () => {
+	const {mutate: createThought} = useCreateThought()
+
 	const [thought, setThought] = useState("");
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -26,7 +29,7 @@ const DialogAddThought = () => {
 
 	function submitForm() {
 		setThought("");
-		alert("You just sent : " + thought);
+		createThought({ text: thought })
 	}
 
 	return (
