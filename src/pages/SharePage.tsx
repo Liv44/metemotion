@@ -1,5 +1,10 @@
+import Layout from "@/components/Layout/Layout";
+
+
 const SharePage = () => {
-	return <div>SharePage</div>;
+	return <Layout>
+		<div>SharePage</div>
+	</Layout>;
 };
 
 export default SharePage;

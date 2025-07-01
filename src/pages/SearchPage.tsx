@@ -1,5 +1,9 @@
+import Layout from "@/components/Layout/Layout";
+
 const SearchPage = () => {
-	return <div>SearchPage</div>;
+	return <Layout>
+		<div>SearchPage</div>
+	</Layout>;
 };
 
 export default SearchPage;
