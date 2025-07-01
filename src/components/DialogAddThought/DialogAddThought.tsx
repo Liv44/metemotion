@@ -11,9 +11,7 @@ import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 
-
 const DialogAddThought = () => {
-
 	const [thought, setThought] = useState("");
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -24,13 +22,12 @@ const DialogAddThought = () => {
 		} else {
 			setIsButtonDisabled(true);
 		}
-	}
+	};
 
 	function submitForm() {
 		setThought("");
 		alert("You just sent : " + thought);
 	}
-
 
 	return (
 		<>
@@ -38,24 +35,26 @@ const DialogAddThought = () => {
 				<DialogTrigger asChild>
 					<Button>Ajouter une pensée</Button>
 				</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Ajouter une pensée</DialogTitle>
-							<DialogDescription>Quelle est ta pensée du jour ?</DialogDescription>
-							<Textarea value={thought} onChange={handleFormChange}/>
-						</DialogHeader>
-						<DialogFooter>
-							<form onSubmit={submitForm}>
-								<Button 
-									type="submit" 
-									disabled={isButtonDisabled} 
-									aria-disabled={isButtonDisabled}
-								>
-									Envoyer
-								</Button>
-							</form>
-						</DialogFooter>
-					</DialogContent>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Ajouter une pensée</DialogTitle>
+						<DialogDescription>
+							Quelle est ta pensée du jour ?
+						</DialogDescription>
+						<Textarea value={thought} onChange={handleFormChange} />
+					</DialogHeader>
+					<DialogFooter>
+						<form onSubmit={submitForm}>
+							<Button
+								type="submit"
+								disabled={isButtonDisabled}
+								aria-disabled={isButtonDisabled}
+							>
+								Envoyer
+							</Button>
+						</form>
+					</DialogFooter>
+				</DialogContent>
 			</Dialog>
 		</>
 	);
