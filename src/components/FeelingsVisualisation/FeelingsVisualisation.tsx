@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import useFeelings from "@/usecases/useFeelings";
 import type { Feeling } from "@/domain/Feeling.ts";
+import { HUMOR_COLORS } from "@/domain/Feeling.ts";
 
 export default function FeelingsVisualisation() {
 	const { feelings, isLoading, error } = useFeelings();
@@ -68,7 +69,7 @@ export default function FeelingsVisualisation() {
 			if (!moodCounts[feeling.humor]) {
 				moodCounts[feeling.humor] = {
 					count: 0,
-					color: feeling.color.hex,
+					color: HUMOR_COLORS[feeling.humor],
 				};
 			}
 			moodCounts[feeling.humor].count++;
@@ -147,7 +148,7 @@ export default function FeelingsVisualisation() {
 					(moodCounts[feeling.humor] || 0) + 1;
 			});
 
-			// Find dominant mood
+			// Find a dominant mood
 			const dominantMood =
 				Object.keys(moodCounts).length > 0
 					? Object.keys(moodCounts).reduce((a, b) =>
@@ -162,10 +163,8 @@ export default function FeelingsVisualisation() {
 				feelings: dayFeelings,
 				count: dayFeelings.length,
 				dominantMood,
-				color: dominantMood
-					? feelingsData.find(f => f.humor === dominantMood)?.color
-							.hex
-					: "#E5E7EB",
+				color: (dominantMood && HUMOR_COLORS[dominantMood as keyof typeof HUMOR_COLORS])
+					|| "#E5E7EB",
 				moodCounts,
 				isToday: i === 0,
 			});
@@ -245,9 +244,7 @@ export default function FeelingsVisualisation() {
 															className="w-4 h-4 rounded-full flex-shrink-0 mt-1"
 															style={{
 																backgroundColor:
-																	feeling
-																		.color
-																		.hex,
+																	HUMOR_COLORS[feeling.humor],
 															}}
 															aria-hidden="true"
 														/>
@@ -258,9 +255,7 @@ export default function FeelingsVisualisation() {
 																<h3
 																	className="font-medium text-sm md:text-base truncate"
 																	style={{
-																		color: feeling
-																			.color
-																			.hex,
+																		color: HUMOR_COLORS[feeling.humor],
 																	}}
 																>
 																	{
@@ -520,12 +515,6 @@ export default function FeelingsVisualisation() {
 															day.moodCounts
 														).map(
 															([mood, count]) => {
-																const feeling =
-																	feelings.find(
-																		f =>
-																			f.humor ===
-																			mood
-																	);
 																const percentage =
 																	(count /
 																		day.count) *
@@ -538,10 +527,7 @@ export default function FeelingsVisualisation() {
 																		className="rounded-sm"
 																		style={{
 																			backgroundColor:
-																				feeling
-																					?.color
-																					.hex ||
-																				"#E5E7EB",
+																				HUMOR_COLORS?.[mood as keyof typeof HUMOR_COLORS] ?? "#E5E7EB",
 																			width: `${percentage}%`,
 																		}}
 																		title={`${mood}: ${count}`}
