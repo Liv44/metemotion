@@ -129,55 +129,89 @@ export default function FeelingsVisualisation() {
 								{todaysFeelings.length > 0 ? (
 									<>
 										{/* Liste des ressentis d'aujourd'hui */}
-										<ul className="space-y-3 md:space-y-4" role="list">
+										<ul
+											className="space-y-3 md:space-y-4"
+											role="list"
+										>
 											{todaysFeelings
-												.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+												.sort(
+													(a, b) =>
+														new Date(
+															b.createdAt
+														).getTime() -
+														new Date(
+															a.createdAt
+														).getTime()
+												)
 												.map((feeling, index) => (
 													<li
-														key={feeling.id || index}
+														key={
+															feeling.id || index
+														}
 														className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-light-purple hover:bg-light-purple/5 transition-colors"
 													>
 														{/* Couleur de l'humeur */}
 														<div
 															className="w-4 h-4 rounded-full flex-shrink-0 mt-1"
 															style={{
-																backgroundColor: feeling.color,
+																backgroundColor:
+																	feeling.color,
 															}}
 															aria-hidden="true"
 														/>
-														
+
 														<div className="flex-1 min-w-0">
 															{/* Humeur et heure */}
 															<div className="flex items-center justify-between mb-2">
-																<h3 
+																<h3
 																	className="font-medium text-sm md:text-base truncate"
-																	style={{ color: feeling.color }}
+																	style={{
+																		color: feeling.color,
+																	}}
 																>
-																	{feeling.humor}
+																	{
+																		feeling.humor
+																	}
 																</h3>
-																<time 
+																<time
 																	className="text-xs text-gray-500 whitespace-nowrap ml-2"
-																	dateTime={feeling.createdAt}
+																	dateTime={
+																		feeling.createdAt
+																	}
 																>
-																	{new Date(feeling.createdAt).toLocaleTimeString('fr-FR', {
-																		hour: '2-digit',
-																		minute: '2-digit'
-																	})}
+																	{new Date(
+																		feeling.createdAt
+																	).toLocaleTimeString(
+																		"fr-FR",
+																		{
+																			hour: "2-digit",
+																			minute: "2-digit",
+																		}
+																	)}
 																</time>
 															</div>
-															
+
 															{/* Description du ressenti */}
 															{feeling.note && (
 																<p className="text-sm text-gray-700 mb-2 break-words">
-																	{feeling.note}
+																	{
+																		feeling.note
+																	}
 																</p>
 															)}
-															
+
 															{/* Activité associée */}
 															{feeling.activity && (
 																<div className="flex items-center gap-1 text-xs text-gray-500">
-																	<span aria-hidden="true">📍</span>
-																	<span>Activité: {feeling.activity}</span>
+																	<span aria-hidden="true">
+																		📍
+																	</span>
+																	<span>
+																		Activité:{" "}
+																		{
+																			feeling.activity
+																		}
+																	</span>
 																</div>
 															)}
 														</div>
@@ -192,22 +226,30 @@ export default function FeelingsVisualisation() {
 													<div className="space-y-1">
 														<p>
 															<strong>
-																Humeur dominante aujourd'hui:
+																Humeur dominante
+																aujourd'hui:
 															</strong>{" "}
-															{todaysStats.mostCommonMood}
+															{
+																todaysStats.mostCommonMood
+															}
 														</p>
 														<p>
 															<strong>
-																Total aujourd'hui:
+																Total
+																aujourd'hui:
 															</strong>{" "}
 															{todaysStats.total}{" "}
 															ressenti
-															{todaysStats.total > 1 ? "s" : ""}
+															{todaysStats.total >
+															1
+																? "s"
+																: ""}
 														</p>
 													</div>
 												) : (
 													<p className="text-gray-400 italic">
-														Aucun ressenti enregistré aujourd'hui
+														Aucun ressenti
+														enregistré aujourd'hui
 													</p>
 												)}
 											</div>
@@ -216,12 +258,19 @@ export default function FeelingsVisualisation() {
 								) : (
 									<div className="text-center py-8 md:py-12">
 										<div className="text-gray-400 text-sm">
-											<p className="mb-2 text-2xl" aria-hidden="true">😊</p>
+											<p
+												className="mb-2 text-2xl"
+												aria-hidden="true"
+											>
+												😊
+											</p>
 											<p>
-												Aucun ressenti enregistré aujourd'hui
+												Aucun ressenti enregistré
+												aujourd'hui
 											</p>
 											<p className="text-xs mt-1">
-												Commencez à enregistrer vos émotions !
+												Commencez à enregistrer vos
+												émotions !
 											</p>
 										</div>
 									</div>
