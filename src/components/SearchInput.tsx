@@ -21,7 +21,10 @@ const SearchInput = React.forwardRef<HTMLInputElement, InputProps>(
 				)}
 			>
 				{/* TODO: mettre l'icon rechercher avec un alt et pas l'ignorer */}
-				<SearchIcon className="h-[16px] w-[16px]" />
+				<SearchIcon
+					className="h-[16px] w-[16px]"
+					aria-label="Recherche"
+				/>
 				<input
 					{...props}
 					type="search"
