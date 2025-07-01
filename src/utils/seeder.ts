@@ -4,11 +4,11 @@ import type { Color } from "@/domain/Feeling";
 
 // Keywords mapping by humor
 const KEYWORDS_MAP: Record<Humor, string[]> = {
-	"JOIE": ["bonheur", "sourire", "célébration", "rire", "énergie"],
-	"TRISTESSE": ["larmes", "mélancolie", "nostalgie", "solitude", "pluie"],
-	"COLÈRE": ["frustration", "injustice", "énervement", "tension", "révolte"],
-	"PEUR": ["angoisse", "stress", "inquiétude", "incertitude", "doute"],
-	"SURPRISE": ["étonnement", "inattendu", "découverte", "choc", "révélation"],
+	JOIE: ["bonheur", "sourire", "célébration", "rire", "énergie"],
+	TRISTESSE: ["larmes", "mélancolie", "nostalgie", "solitude", "pluie"],
+	COLÈRE: ["frustration", "injustice", "énervement", "tension", "révolte"],
+	PEUR: ["angoisse", "stress", "inquiétude", "incertitude", "doute"],
+	SURPRISE: ["étonnement", "inattendu", "découverte", "choc", "révélation"],
 };
 
 // All available humors from the enum
@@ -54,7 +54,10 @@ interface SeedFeelingData {
 	created_at: string;
 }
 
-export const seedDatabase = async (colors: Color[], count: number = 50): Promise<void> => {
+export const seedDatabase = async (
+	colors: Color[],
+	count: number = 50
+): Promise<void> => {
 	if (!colors || colors.length === 0) {
 		throw new Error("No colors available for seeding");
 	}
@@ -77,9 +80,7 @@ export const seedDatabase = async (colors: Color[], count: number = 50): Promise
 	}
 
 	// Insert data into database
-	const { error } = await supabase
-		.from("feeling")
-		.insert(seedData);
+	const { error } = await supabase.from("feeling").insert(seedData);
 
 	if (error) {
 		throw new Error(`Failed to seed database: ${error.message}`);
