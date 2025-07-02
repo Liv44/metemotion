@@ -37,7 +37,7 @@ jobs:
                     FULL_URL="${BASE_URL%/}${path}"
                     echo "➡️ Analyse de ${FULL_URL}"
 
-                    greenframe "$FULL_URL" --json > "greenframe-reports/${SAFE_NAME}.json" || echo "{\"error\":\"Échec pour $FULL_URL\"}" > "greenframe-reports/${SAFE_NAME}.json"
+                    greenframe analyze "$FULL_URL" --json > "greenframe-reports/${SAFE_NAME}.json" || echo "{\"error\":\"Échec pour $FULL_URL\"}" > "greenframe-reports/${SAFE_NAME}.json"
                   done
 
             - name: Poster ou mettre à jour le commentaire PR
