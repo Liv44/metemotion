@@ -1,5 +1,11 @@
+import Layout from "@/components/Layout/Layout";
+
 const SearchPage = () => {
-	return <div>SearchPage</div>;
+	return (
+		<Layout className="bg-white">
+			<div>SearchPage</div>
+		</Layout>
+	);
 };
 
 export default SearchPage;
