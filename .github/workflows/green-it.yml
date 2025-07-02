@@ -12,6 +12,18 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: 🔧 Setup Node.js and pnpm
+              uses: ./.github/actions/setup-node-pnpm
+              with:
+                  node-version: 22.14.0
+                  pnpm-version: 10.6.3
+
+            - name: Install GreenFrame CLI
+              run: curl https://assets.greenframe.io/install.sh | bash
+
             - name: Lancer GreenFrame sur plusieurs pages
               run: |
                   BASE_URL="https://metemotion.onrender.com"
@@ -25,7 +37,7 @@ jobs:
                     FULL_URL="${BASE_URL%/}${path}"
                     echo "➡️ Analyse de ${FULL_URL}"
 
-                    npx --yes greenframe "$FULL_URL" --json > "greenframe-reports/${SAFE_NAME}.json" || echo "{\"error\":\"Échec pour $FULL_URL\"}" > "greenframe-reports/${SAFE_NAME}.json"
+                    greenframe "$FULL_URL" --json > "greenframe-reports/${SAFE_NAME}.json" || echo "{\"error\":\"Échec pour $FULL_URL\"}" > "greenframe-reports/${SAFE_NAME}.json"
                   done
 
             - name: Poster ou mettre à jour le commentaire PR
