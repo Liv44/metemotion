@@ -60,25 +60,25 @@ jobs:
                       try {
                         summary = fs.readFileSync(reportPath, 'utf8');
                       } catch (e) {
-                        summary = '⚠️ *Erreur lors de la lecture du rapport Markdown généré.*';
+                        summary = '⚠️ *Erreur lors de la lecture du rapport Markdown genere.*';
                       }
                       const body = [
-                        '<!-- a11y-report -->', // 🏷️ ancre unique
-                        '## ♿ Rapport d'accessibilité automatique (Playwright + axe-core)',
+                        '<!-- a11y-report -->', 
+                        '## ♿ Rapport d\'accessibilite automatique (Playwright + axe-core)',
                         '',
-                        `🔗 **URL testée** : [${renderUrl}](${renderUrl})`,
+                        `🔗 **URL testee** : [${renderUrl}](${renderUrl})`,
                         '',
                         `📄 **Rapport complet** : [Artefacts GitHub Actions](https://github.com/${owner}/${repo}/actions/runs/${runId})`,
                         '',
                         '---',
                         '',
-                        '### ✅ Résumé :',
+                        '### ✅ Resume :',
                         '',
                         summary,
                         '',
                         '---',
                         '',
-                        '🛠 *Ce rapport a été généré automatiquement par CI via axe-core. Merci de corriger les éléments ci-dessus pour améliorer l'accessibilité.*'
+                        '🛠 *Ce rapport a ete genere automatiquement par CI via axe-core. Merci de corriger les elements ci-dessus pour ameliorer l\'accessibilite.*'
                       ].join('\n');
                       const { data: comments } = await github.rest.issues.listComments({
                         owner,
@@ -97,7 +97,7 @@ jobs:
                           comment_id: existing.id,
                           body
                         });
-                        core.info(`Commentaire a11y mis à jour (#${existing.id})`);
+                        core.info(`Commentaire a11y mis a jour (#${existing.id})`);
                       } else {
                         await github.rest.issues.createComment({
                           owner,
@@ -105,15 +105,15 @@ jobs:
                           issue_number,
                           body
                         });
-                        core.info('Nouveau commentaire a11y créé');
+                        core.info('Nouveau commentaire a11y cree');
                       }
-            - name: Résumé dans GitHub Actions
+            - name: Resume dans GitHub Actions
               if: always()
               run: |
-                  echo "## ✅ Résumé Playwright A11y & Core" >> $GITHUB_STEP_SUMMARY
+                  echo "## ✅ Resume Playwright A11y & Core" >> $GITHUB_STEP_SUMMARY
                   if test -f results/a11y/accessibility-report.md; then
                     echo "### Rapport axe-core" >> $GITHUB_STEP_SUMMARY
                     cat results/a11y/accessibility-report.md >> $GITHUB_STEP_SUMMARY
                   else
-                    echo "⚠️ Rapport axe-core non généré" >> $GITHUB_STEP_SUMMARY
+                    echo "⚠️ Rapport axe-core non genere" >> $GITHUB_STEP_SUMMARY
                   fi
