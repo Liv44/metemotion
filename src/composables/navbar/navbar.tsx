@@ -316,7 +316,7 @@ export const Navbar: React.FC = () => {
 	return (
 		<header
 			role="banner"
-			className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm"
+			className="sticky top-0 z-50 w-full border-b bg-surface text-surface-foreground backdrop-blur supports-[backdrop-filter]:bg-surface/60 shadow-sm"
 		>
 			<SkipLink />
 			<div

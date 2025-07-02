@@ -110,7 +110,7 @@ export const Footer: React.FC = () => {
 								<li key={link.href}>
 									<a
 										href={link.href}
-										className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-1 py-1"
+										className="inline-flex items-center text-sm text-muted-background hover:text-foreground transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-1 py-1"
 										aria-label={
 											link.description || link.label
 										}
@@ -146,7 +146,7 @@ export const Footer: React.FC = () => {
 	return (
 		<footer
 			role="contentinfo"
-			className="bg-card border-t border-border"
+			className="bg-card border-t border-border bg-surface text-surface-foreground supports-[backdrop-filter]:bg-surface/60 shadow-sm"
 			aria-labelledby={mainFooterId}
 		>
 			<div className="w-full px-4 md:px-6 py-12">
@@ -176,7 +176,7 @@ export const Footer: React.FC = () => {
 							</span>
 						</div>
 
-						<p className="text-sm text-muted-foreground max-w-md leading-relaxed">
+						<p className="text-sm text-surface-muted max-w-md leading-relaxed">
 							Votre compagnon pour explorer et comprendre vos
 							émotions. Créez et partagez votre journal émotionnel
 							personnalisé et développez votre bien-être mental.
@@ -252,7 +252,7 @@ export const Footer: React.FC = () => {
 				/>
 
 				{/* Copyright and mentions */}
-				<div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+				<div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-background">
 					<p role="contentinfo">
 						<span
 							aria-label={`Copyright ${currentYear} MetÉmotion`}
