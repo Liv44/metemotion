@@ -10,6 +10,7 @@ const useFeelings = () => {
 					id,
 					humor,
 					keywords,
+					created_at,
 					color (id, label, hexa)
 				`);
 
