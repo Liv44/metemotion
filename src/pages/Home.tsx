@@ -1,10 +1,11 @@
 import Layout from "@/components/Layout/Layout";
+import FeelingsVisualisation from "@/components/FeelingsVisualisation/FeelingsVisualisation.tsx";
 
 const Home = () => {
 	return (
 		<div>
 			<Layout className="bg-white">
-				<h2>Contenu de votre page home</h2>
+				<FeelingsVisualisation />
 			</Layout>
 		</div>
 	);
