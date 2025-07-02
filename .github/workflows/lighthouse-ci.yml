@@ -23,8 +23,9 @@ jobs:
                   pnpm-version: 10.6.3
             - run: pnpm install --no-frozen-lockfile
             - run: pnpm build
+
             - name: Run Lighthouse CI
-              run: pnpx @lhci/cli autorun --config=./lighthouserc.json || echo "LHCI failed!"
+              run: pnpx lhci autorun || echo "LHCI failed!"
 
             - name: Upload Lighthouse reports
               uses: actions/upload-artifact@v4
