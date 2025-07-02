@@ -37,7 +37,7 @@ jobs:
                     FULL_URL="${BASE_URL%/}${path}"
                     echo "➡️ Analyse de ${FULL_URL}"
 
-                    greenframe analyze "$FULL_URL" --json > "greenframe-reports/${SAFE_NAME}.json" || echo "{\"error\":\"Échec pour $FULL_URL\"}" > "greenframe-reports/${SAFE_NAME}.json"
+                    greenframe analyze "$FULL_URL" > "greenframe-reports/${SAFE_NAME}.txt" || echo "Échec pour $FULL_URL" > "greenframe-reports/${SAFE_NAME}.txt"
                   done
 
             - name: Poster ou mettre à jour le commentaire PR
@@ -61,20 +61,18 @@ jobs:
                       ];
 
                       for (const file of files) {
-                        const json = JSON.parse(fs.readFileSync(path.join('./greenframe-reports', file), 'utf8'));
-                        const page = file.replace('.json', '').replace(/_/g, '/') || '/';
+                        const content = fs.readFileSync(path.join('./greenframe-reports', file), 'utf8');
+                        const page = file.replace('.txt', '').replace(/_/g, '/') || '/';
 
-                        if (json.error) {
-                          body.push(`### ❌ ${page}\n- ${json.error}`);
+                        if (content.includes('Échec pour')) {
+                          body.push(`### ❌ ${page}\n- ${content}`);
                           continue;
                         }
 
-                        const grams = json.co2?.grams ?? 0;
-                        const emoji = grams < 0.5 ? '🟢' : (grams < 1 ? '🟠' : '🔴');
-
                         body.push(`### ${page}`);
-                        body.push(`- CO₂ estimé : **${grams.toFixed(2)}g** ${emoji}`);
-                        body.push(`- Chargement simulé : ${json.steps?.length ?? '?'} étapes`);
+                        body.push('```');
+                        body.push(content);
+                        body.push('```');
                         body.push('');
                       }
 
