@@ -6,17 +6,7 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import {
-	Menu,
-	X,
-	Home,
-	Heart,
-	Smile,
-	Search,
-	Plus,
-	LogIn,
-	User,
-} from "lucide-react";
+import { Menu, X, Home, Heart, Smile, Search, Plus } from "lucide-react";
 
 interface NavItem {
 	label: string;
@@ -36,7 +26,6 @@ const SkipLink: React.FC = () => (
 
 export const Navbar: React.FC = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
 	const mobileButtonRef = useRef<HTMLButtonElement>(null);
 	const firstMobileItemRef = useRef<HTMLAnchorElement>(null);
@@ -150,31 +139,6 @@ export const Navbar: React.FC = () => {
 				<Plus className="w-4 h-4 mr-2" aria-hidden="true" />
 				Ajouter une pensée
 			</Button>
-
-			{/* Login/profile button */}
-			{isLoggedIn ? (
-				<Button
-					variant="outline"
-					size="sm"
-					className="flex items-center gap-2 focus:ring-2 focus:ring-primary focus:ring-offset-2"
-					onClick={() => setIsLoggedIn(false)}
-					aria-label="Accéder au profil utilisateur"
-				>
-					<User className="w-4 h-4" aria-hidden="true" />
-					Profil
-				</Button>
-			) : (
-				<Button
-					variant="outline"
-					size="sm"
-					className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2"
-					onClick={() => setIsLoggedIn(true)}
-					aria-label="Se connecter à votre compte"
-				>
-					<LogIn className="w-4 h-4" aria-hidden="true" />
-					Se connecter
-				</Button>
-			)}
 		</div>
 	);
 
@@ -273,39 +237,6 @@ export const Navbar: React.FC = () => {
 						>
 							<Plus className="w-4 h-4" aria-hidden="true" />
 							Ajouter une pensée
-						</Button>
-
-						{/* Login/Profile button */}
-						<Button
-							variant="outline"
-							className="w-full justify-start gap-3 hover:bg-accent hover:text-accent-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2"
-							onClick={() => {
-								setIsLoggedIn(!isLoggedIn);
-								closeMobileMenu();
-							}}
-							aria-label={
-								isLoggedIn
-									? "Accéder au profil utilisateur"
-									: "Se connecter à votre compte"
-							}
-						>
-							{isLoggedIn ? (
-								<>
-									<User
-										className="w-4 h-4"
-										aria-hidden="true"
-									/>
-									Profil
-								</>
-							) : (
-								<>
-									<LogIn
-										className="w-4 h-4"
-										aria-hidden="true"
-									/>
-									Se connecter
-								</>
-							)}
 						</Button>
 					</div>
 				</nav>
