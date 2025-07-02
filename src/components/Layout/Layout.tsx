@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children, className = "" }) => {
 			{/* Main content */}
 			<main
 				id="main-content"
-				className={`flex-1 ${className}`}
+				className={`flex-1 py-3 ${className} `}
 				role="main"
 				tabIndex={-1}
 			>
