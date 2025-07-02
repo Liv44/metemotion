@@ -62,7 +62,7 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 								{todaysFeelings
 									.sort(
 										(a, b) =>
-											b.createdAt.getTime()-
+											b.createdAt.getTime() -
 											a.createdAt.getTime()
 									)
 									.map((feeling, index) => (
