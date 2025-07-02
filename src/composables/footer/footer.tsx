@@ -1,4 +1,3 @@
-// src/composables/footer/Footer.tsx
 import React, { useId } from "react";
 import { Heart, Mail, Shield, Info, Users, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -151,14 +150,14 @@ export const Footer: React.FC = () => {
 			aria-labelledby={mainFooterId}
 		>
 			<div className="w-full px-4 md:px-6 py-12">
-				{/* En-tête invisible pour les lecteurs d'écran */}
+				{/* Invisible header for screen readers */}
 				<h2 id={mainFooterId} className="sr-only">
 					Pied de page de MetÉmotion
 				</h2>
 
-				{/* Contenu principal du footer */}
+				{/* Main content of the footer */}
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-					{/* Branding et description */}
+					{/* Branding and description */}
 					<section
 						className="space-y-4 lg:col-span-2"
 						aria-labelledby={brandingId}
@@ -239,20 +238,20 @@ export const Footer: React.FC = () => {
 						</div>
 					</section>
 
-					{/* Sections de liens */}
+					{/* Links section */}
 					{footerSections.map(section => (
 						<FooterSection key={section.title} section={section} />
 					))}
 				</div>
 
-				{/* Séparateur */}
+				{/* Séparator */}
 				<Separator
 					className="my-8"
 					role="separator"
 					aria-label="Séparation entre le contenu principal et les informations légales"
 				/>
 
-				{/* Copyright et mentions */}
+				{/* Copyright and mentions */}
 				<div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
 					<p role="contentinfo">
 						<span
@@ -274,7 +273,7 @@ export const Footer: React.FC = () => {
 				</div>
 			</div>
 
-			{/* Skip link pour remonter en haut */}
+			{/* Skip link pour to go on top */}
 			<a
 				href="#top"
 				className="sr-only focus:not-sr-only focus:fixed focus:bottom-4 focus:right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-lg"

@@ -1,4 +1,3 @@
-// src/composables/navbar/Navbar.tsx
 import React, { useState, useRef, useEffect, useId } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -73,7 +72,7 @@ export const Navbar: React.FC = () => {
 		},
 	];
 
-	// Gestion des touches clavier
+	// Keyboard management
 	const handleKeyDown = (event: React.KeyboardEvent): void => {
 		if (event.key === "Escape" && mobileMenuOpen) {
 			closeMobileMenu();
@@ -86,20 +85,19 @@ export const Navbar: React.FC = () => {
 
 	const closeMobileMenu = (): void => {
 		setMobileMenuOpen(false);
-		// Remettre le focus sur le bouton menu après fermeture
 		setTimeout(() => {
 			mobileButtonRef.current?.focus();
 		}, 100);
 	};
 
-	// Focus automatique sur le premier élément du menu mobile
+	// Auto focus on the first element of the mobile menu
 	useEffect(() => {
 		if (mobileMenuOpen && firstMobileItemRef.current) {
 			firstMobileItemRef.current.focus();
 		}
 	}, [mobileMenuOpen]);
 
-	// Placeholder pour le modal - à remplacer par votre collègue
+	// Placeholder for the modal here !!!
 	const handleAddThought = (): void => {
 		console.log("Ouvrir modal ajouter pensée - À implémenter");
 	};
@@ -139,10 +137,10 @@ export const Navbar: React.FC = () => {
 		</nav>
 	);
 
-	// Boutons à droite
+	// Right buttons
 	const RightButtons: React.FC = () => (
 		<div className="hidden md:flex items-center gap-3">
-			{/* Bouton Ajouter pensée - placeholder pour votre collègue */}
+			{/* Add thought button - Placeholder for the modal here !!! */}
 			<Button
 				className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2"
 				size="sm"
@@ -153,7 +151,7 @@ export const Navbar: React.FC = () => {
 				Ajouter une pensée
 			</Button>
 
-			{/* Bouton connexion/profil */}
+			{/* Login/profile button */}
 			{isLoggedIn ? (
 				<Button
 					variant="outline"
@@ -246,7 +244,7 @@ export const Navbar: React.FC = () => {
 									/>
 									{item.label}
 
-									{/* Indicateur pour mobile */}
+									{/* Mobile Indicator */}
 									{isActive && (
 										<span
 											className="ml-auto w-2 h-2 bg-primary-foreground rounded-full"
@@ -257,14 +255,14 @@ export const Navbar: React.FC = () => {
 							);
 						})}
 
-						{/* Séparateur */}
+						{/* Séparator */}
 						<div
 							className="border-t my-4"
 							role="separator"
 							aria-hidden="true"
 						></div>
 
-						{/* Bouton Ajouter pensée mobile - placeholder */}
+						{/* Add thought button for mobile */}
 						<Button
 							className="w-full bg-primary hover:bg-primary/90 text-primary-foreground justify-start gap-3 focus:ring-2 focus:ring-primary focus:ring-offset-2"
 							onClick={() => {
@@ -277,7 +275,7 @@ export const Navbar: React.FC = () => {
 							Ajouter une pensée
 						</Button>
 
-						{/* Bouton connexion mobile */}
+						{/* Login/Profile button */}
 						<Button
 							variant="outline"
 							className="w-full justify-start gap-3 hover:bg-accent hover:text-accent-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -321,8 +319,6 @@ export const Navbar: React.FC = () => {
 			className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm"
 		>
 			<SkipLink />
-
-			{/* Live region pour les annonces aux lecteurs d'écran */}
 			<div
 				id={liveRegionId}
 				aria-live="polite"
@@ -333,7 +329,6 @@ export const Navbar: React.FC = () => {
 			</div>
 
 			<div className="w-full px-4 md:px-6 flex h-16 items-center gap-4">
-				{/* Logo à gauche - taille fixe */}
 				<div className="flex items-center space-x-2 flex-shrink-0">
 					<a
 						href="/"
@@ -350,12 +345,10 @@ export const Navbar: React.FC = () => {
 					</a>
 				</div>
 
-				{/* Navigation - PREND TOUT L'ESPACE DISPONIBLE */}
 				<div className="flex-1 flex justify-center">
 					<DesktopNavigation />
 				</div>
 
-				{/* Boutons à droite - taille fixe */}
 				<div className="flex items-center gap-3 flex-shrink-0">
 					<RightButtons />
 					<MobileNavigation />

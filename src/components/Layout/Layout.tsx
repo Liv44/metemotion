@@ -10,10 +10,10 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, className = "" }) => {
 	return (
 		<div id="top" className="min-h-screen flex flex-col">
-			{/* Header avec Navbar */}
+			{/* Header with Navbar */}
 			<Navbar />
 
-			{/* Contenu principal */}
+			{/* Main content */}
 			<main
 				id="main-content"
 				className={`flex-1 ${className}`}
