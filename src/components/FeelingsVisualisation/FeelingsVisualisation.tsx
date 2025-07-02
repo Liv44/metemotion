@@ -15,7 +15,7 @@ const getStats = (feelingsData: Feeling[]) => {
 	const total = feelingsData.length;
 	const today = feelingsData.filter(feeling => {
 		const todayDate = new Date();
-		const feelingDate = new Date(feeling.createdAt);
+		const feelingDate = feeling.createdAt;
 		return feelingDate.toDateString() === todayDate.toDateString();
 	}).length;
 
@@ -38,7 +38,7 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 	// Filter feelings for today only
 	const todaysFeelings = feelings.filter(feeling => {
 		const today = new Date();
-		const feelingDate = new Date(feeling.createdAt);
+		const feelingDate = feeling.createdAt;
 		return feelingDate.toDateString() === today.toDateString();
 	});
 	const todaysStats = getStats(todaysFeelings);
@@ -62,15 +62,14 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 								{todaysFeelings
 									.sort(
 										(a, b) =>
-											new Date(b.createdAt).getTime() -
-											new Date(a.createdAt).getTime()
+											b.createdAt.getTime()-
+											a.createdAt.getTime()
 									)
 									.map((feeling, index) => (
 										<li
 											key={feeling.id || index}
 											className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-light-purple hover:bg-light-purple/5 transition-colors"
 										>
-											{/* Couleur de l'humeur */}
 											<div
 												className="w-4 h-4 rounded-full flex-shrink-0 mt-1"
 												style={{
@@ -83,7 +82,6 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 											/>
 
 											<div className="flex-1 min-w-0">
-												{/* Humeur et heure */}
 												<div className="flex items-center justify-between mb-2">
 													<h3
 														className="font-medium text-sm md:text-base truncate"
@@ -109,7 +107,6 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 													</time>
 												</div>
 
-												{/* Keywords */}
 												{feeling.keywords &&
 													feeling.keywords.length >
 														0 && (
@@ -138,7 +135,7 @@ function TodaysTab({ feelings }: { feelings: Feeling[] }) {
 									))}
 							</ul>
 
-							{/* Résumé de la journée */}
+							{/* Today resume */}
 							<div className="mt-4 md:mt-6 p-3 md:p-4 bg-light-purple/10 rounded-lg">
 								<div className="text-sm text-foreground">
 									{todaysStats.total > 0 ? (
@@ -309,7 +306,7 @@ function TrendTabs({ feelings }: { feelings: Feeling[] }) {
 
 			// Filter feelings for this specific day
 			const dayFeelings = feelingsData.filter(feeling => {
-				const feelingDate = new Date(feeling.createdAt);
+				const feelingDate = feeling.createdAt;
 				feelingDate.setHours(0, 0, 0, 0);
 				return feelingDate.getTime() === date.getTime();
 			});
