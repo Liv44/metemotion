@@ -66,7 +66,12 @@ const SearchPage = () => {
 			</div>
 			{/* described by "tiltre auto a chaque frappe" */}
 			{/* nb de résultat => aria-live polite*/}
-
+			<p>
+				<span className="font-bold" aria-live="polite">
+					{filteredAndSortedItems.length}
+				</span>{" "}
+				résultats
+			</p>
 			<ul
 				className="flex gap-2 flex-wrap justify-center"
 				aria-live="polite"
