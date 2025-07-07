@@ -946,7 +946,7 @@ packages:
 
     "@radix-ui/react-select@2.2.5":
         resolution:
-            {   
+            {
                 integrity: sha512-HnMTdXEVuuyzx63ME0ut4+sEMYW6oouHWNGUZc7ddvUWIcfCva/AMoqEW/3wnEllriMWBa0RHspCYnfCWJQYmA==,
             }
 
