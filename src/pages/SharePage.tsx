@@ -69,16 +69,22 @@ const SharePage = () => {
 			>
 				<div className="flex flex-col gap-4 mx-auto">
 					<div className="flex flex-col gap-2">
-						<Label htmlFor="select-humor">Humeur</Label>
+						<Label htmlFor="select-humor">
+							Humeur
+							<span className="sr-only">Champ obligatoire</span>
+							<span aria-hidden={true} className="text-red-500">
+								*
+							</span>
+						</Label>
 						<Select
 							value={humor}
 							onValueChange={humor => setHumor(humor as Humor)}
+							required={true}
 						>
 							<SelectTrigger
 								id="select-humor"
 								title="Humeur"
 								className="w-full"
-								aria-required="true"
 								aria-controls="value-humor"
 							>
 								<SelectValue
@@ -96,7 +102,14 @@ const SharePage = () => {
 						</Select>
 					</div>
 					<div className="flex flex-col gap-2">
-						<Label htmlFor="mot-cle">Mot clé</Label>
+						<Label htmlFor="mot-cle">
+							Mot clé
+							<span className="sr-only">Champ obligatoire</span>
+							<span aria-hidden={true} className="text-red-500">
+								*
+							</span>
+						</Label>
+
 						<Input
 							type="text"
 							placeholder="Mot clé (séparés par ;)"
@@ -104,16 +117,28 @@ const SharePage = () => {
 							value={keyword}
 							onChange={e => setKeyword(e.target.value)}
 							className="w-full"
-							aria-required="true"
+							required={true}
 						/>
 					</div>
 					<div className="flex flex-col gap-2 w-full">
 						<fieldset className="flex flex-col gap-2 w-full border-0 p-0 m-0">
-							<legend className="mb-2">Couleur</legend>
+							<legend className="mb-2">
+								Couleur
+								<span className="sr-only">
+									Champs obligatoire
+								</span>
+								<span
+									aria-hidden={true}
+									className="text-red-500"
+								>
+									*
+								</span>
+							</legend>
 							<RadioGroup
 								value={color}
 								onValueChange={setColor}
-								title="Couleur"
+								title={color}
+								required={true}
 							>
 								<div className="flex flex-wrap gap-y-4 sm:gap-x-4 items-center justify-center w-full">
 									{colors &&
@@ -126,6 +151,7 @@ const SharePage = () => {
 													<label
 														className="sr-only"
 														htmlFor={colorObj.id}
+														id={`${colorObj.id}-label`}
 													>
 														{colorObj.name}
 													</label>
@@ -133,6 +159,7 @@ const SharePage = () => {
 														value={colorObj.id}
 														id={colorObj.id}
 														title={colorObj.name}
+														aria-labelledby={`${colorObj.id}-label`}
 													/>
 													<ColorBlock
 														color={colorObj.hex}
