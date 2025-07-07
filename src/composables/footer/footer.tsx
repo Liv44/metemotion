@@ -1,7 +1,7 @@
-import React, { useId } from "react";
-import { Heart, Mail, Shield, Info, Users, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { BookOpen, Heart, Info, Mail, Shield } from "lucide-react";
+import React, { useId } from "react";
 
 interface FooterLink {
 	label: string;
@@ -32,16 +32,10 @@ export const Footer: React.FC = () => {
 					description: "Découvrir notre mission et nos valeurs",
 				},
 				{
-					label: "Équipe",
-					href: "/team",
-					icon: Users,
-					description: "Rencontrer notre équipe et nos experts",
-				},
-				{
 					label: "Blog",
 					href: "/blog",
 					icon: BookOpen,
-					description: "Lire nos articles sur le bien-être mental",
+					description: "Accéder au blog",
 				},
 			],
 		},
@@ -52,11 +46,10 @@ export const Footer: React.FC = () => {
 					label: "Politique de confidentialité",
 					href: "/privacy",
 					icon: Shield,
-					description:
-						"Consulter notre politique de protection des données personnelles",
+					description: "Consulter notre politique de confidentialité",
 				},
 				{
-					label: "Conditions d'utilisation",
+					label: "Conditions générales d'utilisation",
 					href: "/terms",
 					description: "Lire nos conditions générales d'utilisation",
 				},
@@ -71,7 +64,7 @@ export const Footer: React.FC = () => {
 
 	const socialLinks: FooterLink[] = [
 		{
-			label: "Envoyer mail",
+			label: "Contacter par email",
 			href: "mailto:contact@metemotion.fr",
 			icon: Mail,
 			description:

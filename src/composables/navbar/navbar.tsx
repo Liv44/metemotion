@@ -48,13 +48,13 @@ export const Navbar: React.FC = () => {
 			label: "Accueil",
 			href: "/",
 			icon: Home,
-			description: "Aller à la page d'accueil",
+			description: "Aller à la page Accueil",
 		},
 		{
 			label: "Rechercher",
 			href: "/search",
 			icon: Search,
-			description: "Aller à la page de recherche",
+			description: "Aller à la page Rechercher",
 		},
 		{
 			label: "Partage d'humeur",
@@ -210,11 +210,7 @@ export const Navbar: React.FC = () => {
 						})}
 
 						{/* Séparator */}
-						<div
-							className="border-t my-4"
-							role="separator"
-							aria-hidden="true"
-						></div>
+						<div className="border-t my-4" aria-hidden="true"></div>
 
 						<DialogAddThought />
 					</div>
