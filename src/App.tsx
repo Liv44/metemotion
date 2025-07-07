@@ -1,5 +1,5 @@
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import {
 	PersistQueryClientProvider,
 	persistQueryClient,
@@ -37,6 +37,7 @@ const queryClient = new QueryClient({
 
 const localStoragePersister = createAsyncStoragePersister({
 	storage: window.localStorage,
+	deserialize,
 });
 
 persistQueryClient({
@@ -46,9 +47,12 @@ persistQueryClient({
 
 function App() {
 	return (
-		<QueryClientProvider client={queryClient}>
+		<PersistQueryClientProvider
+			client={queryClient}
+			persistOptions={{ persister: localStoragePersister }}
+		>
 			<Router />
-		</QueryClientProvider>
+		</PersistQueryClientProvider>
 	);
 }
 
