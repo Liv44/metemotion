@@ -25,7 +25,7 @@ jobs:
             - run: pnpm build
 
             - name: Run Lighthouse CI
-              run: pnpm lhci autorun || echo "LHCI failed!"
+              run: pnpx @lhci/cli autorun --config=./lighthouserc.json || echo "LHCI failed!"
 
             - name: Upload Lighthouse reports
               uses: actions/upload-artifact@v4
