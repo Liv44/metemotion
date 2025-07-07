@@ -1,7 +1,9 @@
+import FeelingsVisualisation from "@/components/FeelingsVisualisation/FeelingsVisualisation.tsx";
+
 const Home = () => {
 	return (
 		<div>
-			<h1>Home</h1>
+			<FeelingsVisualisation />
 		</div>
 	);
 };
