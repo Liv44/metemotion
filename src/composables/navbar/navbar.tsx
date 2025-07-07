@@ -7,6 +7,7 @@ import {
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Menu, X, Home, Heart, Smile, Search, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface NavItem {
 	label: string;
@@ -104,6 +105,7 @@ export const Navbar: React.FC = () => {
 						return (
 							<NavigationMenuItem key={item.href}>
 								<NavigationMenuLink
+									asChild
 									href={item.href}
 									className={`
 										text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-3 py-2
@@ -116,7 +118,7 @@ export const Navbar: React.FC = () => {
 									aria-current={isActive ? "page" : undefined}
 									aria-label={item.description}
 								>
-									{item.label}
+									<Link to={item.href}>{item.label}</Link>
 								</NavigationMenuLink>
 							</NavigationMenuItem>
 						);
