@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useId } from "react";
+import DialogAddThought from "@/components/DialogAddThought/DialogAddThought";
 import { Button } from "@/components/ui/button";
 import {
 	NavigationMenu,
@@ -7,6 +7,8 @@ import {
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Menu, X, Home, Heart, Smile, Search, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
+import React, { useEffect, useId, useRef, useState } from "react";
 
 interface NavItem {
 	label: string;
@@ -86,11 +88,6 @@ export const Navbar: React.FC = () => {
 		}
 	}, [mobileMenuOpen]);
 
-	// Placeholder for the modal here !!!
-	const handleAddThought = (): void => {
-		console.log("Ouvrir modal ajouter pensée - À implémenter");
-	};
-
 	const DesktopNavigation: React.FC = () => (
 		<nav
 			role="navigation"
@@ -104,6 +101,7 @@ export const Navbar: React.FC = () => {
 						return (
 							<NavigationMenuItem key={item.href}>
 								<NavigationMenuLink
+									asChild
 									href={item.href}
 									className={`
 										text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-3 py-2
@@ -116,7 +114,7 @@ export const Navbar: React.FC = () => {
 									aria-current={isActive ? "page" : undefined}
 									aria-label={item.description}
 								>
-									{item.label}
+									<Link to={item.href}>{item.label}</Link>
 								</NavigationMenuLink>
 							</NavigationMenuItem>
 						);
@@ -129,16 +127,7 @@ export const Navbar: React.FC = () => {
 	// Right buttons
 	const RightButtons: React.FC = () => (
 		<div className="hidden md:flex items-center gap-3">
-			{/* Add thought button - Placeholder for the modal here !!! */}
-			<Button
-				className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2"
-				size="sm"
-				onClick={handleAddThought}
-				aria-label="Ouvrir le formulaire pour ajouter une nouvelle pensée"
-			>
-				<Plus className="w-4 h-4 mr-2" aria-hidden="true" />
-				Ajouter une pensée
-			</Button>
+			<DialogAddThought />
 		</div>
 	);
 
@@ -180,12 +169,12 @@ export const Navbar: React.FC = () => {
 							const IconComponent = item.icon;
 							const isActive = isActivePage(item.href);
 							return (
-								<a
+								<Link
 									key={item.href}
 									ref={
 										index === 0 ? firstMobileItemRef : null
 									}
-									href={item.href}
+									to={item.href}
 									className={`
 										flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
 										${
@@ -215,7 +204,7 @@ export const Navbar: React.FC = () => {
 											aria-hidden="true"
 										></span>
 									)}
-								</a>
+								</Link>
 							);
 						})}
 
@@ -226,18 +215,7 @@ export const Navbar: React.FC = () => {
 							aria-hidden="true"
 						></div>
 
-						{/* Add thought button for mobile */}
-						<Button
-							className="w-full bg-primary hover:bg-primary/90 text-primary-foreground justify-start gap-3 focus:ring-2 focus:ring-primary focus:ring-offset-2"
-							onClick={() => {
-								handleAddThought();
-								closeMobileMenu();
-							}}
-							aria-label="Ouvrir le formulaire pour ajouter une nouvelle pensée"
-						>
-							<Plus className="w-4 h-4" aria-hidden="true" />
-							Ajouter une pensée
-						</Button>
+						<DialogAddThought />
 					</div>
 				</nav>
 			)}

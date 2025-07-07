@@ -1,13 +1,13 @@
 import React from "react";
 import { Navbar } from "@/composables/navbar/navbar";
 import { Footer } from "@/composables/footer/footer";
+import { Outlet } from "react-router-dom";
 
 interface LayoutProps {
-	children: React.ReactNode;
 	className?: string;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, className = "" }) => {
+const Layout: React.FC<LayoutProps> = ({ className = "" }) => {
 	return (
 		<div id="top" className="min-h-screen flex flex-col">
 			{/* Header with Navbar */}
@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children, className = "" }) => {
 				role="main"
 				tabIndex={-1}
 			>
-				{children}
+				<Outlet />
 			</main>
 
 			{/* Footer */}
