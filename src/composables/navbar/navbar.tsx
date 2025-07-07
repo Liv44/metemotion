@@ -6,7 +6,7 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, Home, Heart, Smile, Search, Plus } from "lucide-react";
+import { Menu, X, Home, Heart, Smile, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import React, { useEffect, useId, useRef, useState } from "react";
 
@@ -81,7 +81,7 @@ export const Navbar: React.FC = () => {
 		}, 100);
 	};
 
-	// Auto focus on the first element of the mobile menu
+	// Autofocus on the first element of the mobile menu
 	useEffect(() => {
 		if (mobileMenuOpen && firstMobileItemRef.current) {
 			firstMobileItemRef.current.focus();

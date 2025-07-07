@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import useCreateThought from "@/usecases/useCreateThought";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
@@ -19,7 +19,9 @@ const DialogAddThought = () => {
 	const [thought, setThought] = useState("");
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-	const handleFormChange = (event: any) => {
+	const handleFormChange = (
+		event: React.ChangeEvent<HTMLTextAreaElement>
+	) => {
 		setThought(event.target.value);
 		if (event.target.value != "") {
 			setIsButtonDisabled(false);
