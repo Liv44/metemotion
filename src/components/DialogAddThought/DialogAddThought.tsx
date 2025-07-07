@@ -19,7 +19,9 @@ const DialogAddThought = () => {
 	const [thought, setThought] = useState("");
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-	const handleFormChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleFormChange = (
+		event: React.ChangeEvent<HTMLTextAreaElement>
+	) => {
 		setThought(event.target.value);
 		if (event.target.value != "") {
 			setIsButtonDisabled(false);

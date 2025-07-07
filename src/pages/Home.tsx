@@ -2,7 +2,7 @@ import FeelingsVisualisation from "@/components/FeelingsVisualisation/FeelingsVi
 
 const Home = () => {
 	return (
-		<div >
+		<div>
 			<FeelingsVisualisation />
 		</div>
 	);
