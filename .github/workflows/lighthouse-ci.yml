@@ -25,7 +25,7 @@ jobs:
             - run: pnpm build
 
             - name: Run Lighthouse CI
-              run: pnpm lhci autorun || echo "LHCI failed!"
+              run: pnpm lighthouse:ci || echo "LHCI failed!"
 
             - name: Upload Lighthouse reports
               uses: actions/upload-artifact@v4
@@ -40,11 +40,12 @@ jobs:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   script: |
                       const fs = require('fs');
+                      const core = require('@actions/core');
                       const { owner, repo } = context.repo;
                       const issue_number = context.issue.number;
                       const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 
-                      const manifestPath = './frontend/lhci-report/manifest.json';
+                      const manifestPath = './lhci-report/manifest.json';
                       const summary = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
                       const toEmoji = score => {
