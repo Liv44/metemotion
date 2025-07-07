@@ -6,9 +6,9 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, Home, Heart, Smile, Search } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Heart, Home, Menu, Search, Smile, X } from "lucide-react";
 import React, { useEffect, useId, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface NavItem {
 	label: string;
