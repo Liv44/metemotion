@@ -10,7 +10,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import useColors from "@/usecases/useGetColors";
 import Layout from "@/components/Layout/Layout";
 import useCreateFeelings from "@/usecases/useCreateFeelings";
@@ -31,6 +31,13 @@ const SharePage = () => {
 	const [color, setColor] = useState<string | undefined>(undefined);
 	const createFeeling = useCreateFeelings();
 	const [error, setError] = useState<string | null>(null);
+	const errorRef = useRef<HTMLDivElement | null>(null);
+
+	useEffect(() => {
+		if (error && errorRef.current) {
+			errorRef.current.focus();
+		}
+	}, [error]);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -73,7 +80,11 @@ const SharePage = () => {
 									setHumor(humor as Humor)
 								}
 							>
-								<SelectTrigger className="w-auto min-w-[120px] max-w-full">
+								<SelectTrigger
+									id="humeur"
+									className="w-auto min-w-[120px] max-w-full"
+									aria-required="true"
+								>
 									<SelectValue placeholder="Humeur" />
 								</SelectTrigger>
 								<SelectContent>
@@ -94,38 +105,49 @@ const SharePage = () => {
 								value={keyword}
 								onChange={e => setKeyword(e.target.value)}
 								className="w-auto min-w-[120px] max-w-full"
+								aria-required="true"
 							/>
 						</div>
 					</div>
 					<div className="flex flex-col gap-2 items-center w-full">
-						<Label>Couleur</Label>
-						<RadioGroup value={color} onValueChange={setColor}>
-							<div className="flex flex-col sm:flex-row gap-y-4 sm:gap-x-4 items-center justify-center w-full">
-								{colors?.map(colorObj => (
-									<div
-										key={colorObj.id}
-										className="flex flex-col items-center"
-									>
-										<div className="flex flex-row items-center gap-x-2">
-											<RadioGroupItem
-												value={colorObj.id}
-												id={colorObj.id}
-											/>
-											<ColorBlock
-												color={colorObj.hex || ""}
-											/>
+						<fieldset className="flex flex-col gap-2 items-center w-full border-0 p-0 m-0">
+							<legend className="mb-2">Couleur</legend>
+							<RadioGroup value={color} onValueChange={setColor}>
+								<div className="flex flex-col sm:flex-row gap-y-4 sm:gap-x-4 items-center justify-center w-full">
+									{colors?.map(colorObj => (
+										<div
+											key={colorObj.id}
+											className="flex flex-col items-center"
+										>
+											<div className="flex flex-row items-center gap-x-2">
+												<RadioGroupItem
+													value={colorObj.id}
+													id={colorObj.id}
+												/>
+												<ColorBlock
+													color={colorObj.hex || ""}
+												/>
+											</div>
+											<Label htmlFor={colorObj.id}>
+												{colorObj.name}
+											</Label>
 										</div>
-										<Label htmlFor={colorObj.id}>
-											{colorObj.name}
-										</Label>
-									</div>
-								))}
-							</div>
-						</RadioGroup>
+									))}
+								</div>
+							</RadioGroup>
+						</fieldset>
 					</div>
-					{error && (
-						<div className="text-red-500 text-sm mb-2 text-center w-full">
-							{error}
+					{(error || createFeeling.error) && (
+						<div
+							className="text-red-500 text-sm mb-2 text-center w-full"
+							role="alert"
+							tabIndex={-1}
+							ref={errorRef}
+						>
+							{error ||
+								(createFeeling.error
+									? "Erreur lors de la création de l'émotion."
+									: null)}
 						</div>
 					)}
 					<div className="flex justify-center w-full">
