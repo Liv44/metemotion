@@ -8,6 +8,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import useCreateThought from "@/usecases/useCreateThought";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -36,7 +37,14 @@ const DialogAddThought = () => {
 		<>
 			<Dialog>
 				<DialogTrigger asChild>
-					<Button>Ajouter une pensée</Button>
+					<Button
+						className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+						size="sm"
+						aria-label="Ouvrir le formulaire pour ajouter une nouvelle pensée"
+					>
+						<Plus className="w-4 h-4 mr-2" aria-hidden="true" />
+						Ajouter une pensée
+					</Button>
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
