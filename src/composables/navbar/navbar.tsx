@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useId } from "react";
+import DialogAddThought from "@/components/DialogAddThought/DialogAddThought";
 import { Button } from "@/components/ui/button";
 import {
 	NavigationMenu,
@@ -6,7 +6,8 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, Home, Heart, Smile, Search, Plus } from "lucide-react";
+import { Heart, Home, Menu, Search, Smile, X } from "lucide-react";
+import React, { useEffect, useId, useRef, useState } from "react";
 
 interface NavItem {
 	label: string;
@@ -86,11 +87,6 @@ export const Navbar: React.FC = () => {
 		}
 	}, [mobileMenuOpen]);
 
-	// Placeholder for the modal here !!!
-	const handleAddThought = (): void => {
-		console.log("Ouvrir modal ajouter pensée - À implémenter");
-	};
-
 	const DesktopNavigation: React.FC = () => (
 		<nav
 			role="navigation"
@@ -129,16 +125,7 @@ export const Navbar: React.FC = () => {
 	// Right buttons
 	const RightButtons: React.FC = () => (
 		<div className="hidden md:flex items-center gap-3">
-			{/* Add thought button - Placeholder for the modal here !!! */}
-			<Button
-				className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2"
-				size="sm"
-				onClick={handleAddThought}
-				aria-label="Ouvrir le formulaire pour ajouter une nouvelle pensée"
-			>
-				<Plus className="w-4 h-4 mr-2" aria-hidden="true" />
-				Ajouter une pensée
-			</Button>
+			<DialogAddThought />
 		</div>
 	);
 
@@ -226,18 +213,7 @@ export const Navbar: React.FC = () => {
 							aria-hidden="true"
 						></div>
 
-						{/* Add thought button for mobile */}
-						<Button
-							className="w-full bg-primary hover:bg-primary/90 text-primary-foreground justify-start gap-3 focus:ring-2 focus:ring-primary focus:ring-offset-2"
-							onClick={() => {
-								handleAddThought();
-								closeMobileMenu();
-							}}
-							aria-label="Ouvrir le formulaire pour ajouter une nouvelle pensée"
-						>
-							<Plus className="w-4 h-4" aria-hidden="true" />
-							Ajouter une pensée
-						</Button>
+						<DialogAddThought />
 					</div>
 				</nav>
 			)}
