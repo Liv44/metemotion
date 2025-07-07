@@ -1,2 +1,3 @@
 pnpm run lint
 pnpm run format:commit
+git update-index --again
