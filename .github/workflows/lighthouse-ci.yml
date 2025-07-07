@@ -31,25 +31,21 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   name: lighthouse-report
-                  path: lhci-report/
+                  path: ./lhci-report/
 
             - name: Comment (or update) PR with Lighthouse summary
               if: github.event.pull_request
               uses: actions/github-script@v7
-              env:
-                  PREVIEW_URL: "https://metemotion.onrender.com"
               with:
-                  github-token: ${{ secrets.GH_TOKEN }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
                   script: |
                       const fs = require('fs');
-
                       const { owner, repo } = context.repo;
                       const issue_number = context.issue.number;
-                      const previewBase   = process.env.PREVIEW_URL ?? '';
-                      const runUrl        = `https://github.com/${owner}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+                      const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 
-                      const manifestPath = './lhci-report/manifest.json';
-                      const summary      = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+                      const manifestPath = './frontend/lhci-report/manifest.json';
+                      const summary = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
                       const toEmoji = score => {
                         const pct = Math.round(score * 100);
@@ -62,7 +58,7 @@ jobs:
                       const rows = summary
                         .map(({ url, summary: s, htmlPath }) => {
                           const pathname  = new URL(url).pathname;
-                          const liveUrl   = previewBase ? `${previewBase}${pathname}` : url;
+                          const liveUrl   = url;
                           return `| [\`${pathname}\`](${liveUrl}) | ${toEmoji(s.performance)} ${pct(s.performance)} | ${toEmoji(s.accessibility)} ${pct(s.accessibility)} | ${toEmoji(s['best-practices'])} ${pct(s['best-practices'])} | ${toEmoji(s.seo)} ${pct(s.seo)} |`;
                         })
                         .join('\n');
@@ -86,7 +82,7 @@ jobs:
                       });
 
                       const existing = comments.find(c =>
-                        c.user?.type === 'Bot' &&
+                        c.user?.type === 'Bot' &&               
                         c.body?.includes('<!-- lhci-report -->')
                       );
 
