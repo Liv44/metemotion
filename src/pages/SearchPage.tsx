@@ -55,7 +55,7 @@ const SearchPage = () => {
 
 	return (
 		<div className="flex flex-col items-center justify-center gap-4 p-4">
-			<h1 className="text-2xl">Recherche</h1>
+			<h2 className="text-2xl">Recherche</h2>
 			<div>
 				<SearchInput
 					placeholder="Recherche..."
@@ -64,8 +64,6 @@ const SearchPage = () => {
 					className="min-w-70"
 				/>
 			</div>
-			{/* described by "tiltre auto a chaque frappe" */}
-			{/* nb de résultat => aria-live polite*/}
 			<p>
 				<span className="font-bold" aria-live="polite">
 					{filteredAndSortedItems.length}

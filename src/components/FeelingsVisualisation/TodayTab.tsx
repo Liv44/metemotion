@@ -21,8 +21,10 @@ const TodaysTab = ({ feelings }: { feelings: Feeling[] }) => {
 		<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
 			<Card className="bg-white border-primary lg:col-span-2">
 				<CardHeader className="pb-4">
-					<CardTitle className="text-lg md:text-xl">
-						Ressentis d'aujourd'hui
+					<CardTitle>
+						<h2 className="text-lg md:text-xl">
+							Ressentis d'aujourd'hui
+						</h2>
 					</CardTitle>
 					<CardDescription className="text-sm">
 						Liste des émotions partagées aujourd'hui (

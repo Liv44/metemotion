@@ -43,7 +43,9 @@ const MoodTab = ({ feelings }: { feelings: Feeling[] }) => {
 			<Card className="bg-white border-primary lg:col-span-2">
 				<CardHeader className="pb-4">
 					<CardTitle className="text-lg md:text-xl">
-						Tendances des humeurs
+						<h2 className="text-lg md:text-xl">
+							Tendances des humeurs
+						</h2>
 					</CardTitle>
 					<CardDescription className="text-sm">
 						Répartition des émotions sur 7 jours

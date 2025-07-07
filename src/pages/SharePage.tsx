@@ -2,6 +2,7 @@ import ColorBlock from "@/components/ColorBlock";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
 	Select,
 	SelectContent,
@@ -9,10 +10,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useState, useEffect, useRef } from "react";
-import useColors from "@/usecases/useGetColors";
 import useCreateFeelings from "@/usecases/useCreateFeelings";
+import useColors from "@/usecases/useGetColors";
+import { useEffect, useRef, useState } from "react";
 
 type Humor = "JOIE" | "TRISTESSE" | "COLÈRE" | "PEUR" | "SURPRISE";
 
@@ -57,31 +57,36 @@ const SharePage = () => {
 	};
 
 	return (
-		<div className="flex flex-col items-center justify-start py-8 gap-4 p-2 sm:p-4 rounded-lg sm:rounded-xl border py-6 shadow-sm bg-white border-primary w-auto mx-auto max-w-[90vw] sm:max-w-[35vw]">
+		<div className="flex flex-col items-center justify-start py-8 gap-4 p-2 sm:p-4 rounded-lg sm:rounded-xl border py-6 shadow-sm bg-white border-primary w-auto mx-auto w-[90vw] sm:w-[35vw]">
 			<h1 className="text-2xl font-bold">Ajouter l'émotion du jour</h1>
 			<p>
 				Ajoute ton émotion en la décrivant avec des mots clés, et une
 				image ou une couleur.
 			</p>
 			<form
-				className="flex flex-col gap-y-6 w-auto"
+				className="flex flex-col gap-y-6 w-full"
 				onSubmit={handleSubmit}
 			>
 				<div className="flex flex-col gap-4 mx-auto">
 					<div className="flex flex-col gap-2">
-						<Label htmlFor="humeur">Humeur</Label>
+						<Label htmlFor="select-humor">Humeur</Label>
 						<Select
 							value={humor}
 							onValueChange={humor => setHumor(humor as Humor)}
 						>
 							<SelectTrigger
-								id="humeur"
-								className="w-auto min-w-[120px] max-w-full"
+								id="select-humor"
+								title="Humeur"
+								className="w-full"
 								aria-required="true"
+								aria-controls="value-humor"
 							>
-								<SelectValue placeholder="Humeur" />
+								<SelectValue
+									placeholder="Humeur"
+									id="value-humor"
+								/>
 							</SelectTrigger>
-							<SelectContent>
+							<SelectContent id="humor-content">
 								{humorList.map(humor => (
 									<SelectItem key={humor} value={humor}>
 										{humor}
@@ -98,31 +103,43 @@ const SharePage = () => {
 							id="mot-cle"
 							value={keyword}
 							onChange={e => setKeyword(e.target.value)}
-							className="w-auto min-w-[120px] max-w-full"
+							className="w-full"
 							aria-required="true"
 						/>
 					</div>
 					<div className="flex flex-col gap-2 w-full">
 						<fieldset className="flex flex-col gap-2 w-full border-0 p-0 m-0">
 							<legend className="mb-2">Couleur</legend>
-							<RadioGroup value={color} onValueChange={setColor}>
-								<div className="flex flex-col sm:flex-row gap-y-4 sm:gap-x-4 items-center justify-center w-full">
-									{colors?.map(colorObj => (
-										<div
-											key={colorObj.id}
-											className="flex flex-col items-center"
-										>
-											<div className="flex flex-row items-center gap-x-2">
-												<RadioGroupItem
-													value={colorObj.id}
-													id={colorObj.id}
-												/>
-												<ColorBlock
-													color={colorObj.hex || ""}
-												/>
+							<RadioGroup
+								value={color}
+								onValueChange={setColor}
+								title="Couleur"
+							>
+								<div className="flex flex-wrap gap-y-4 sm:gap-x-4 items-center justify-center w-full">
+									{colors &&
+										colors.map(colorObj => (
+											<div
+												key={colorObj.id}
+												className="flex flex-col items-center"
+											>
+												<div className="flex flex-row items-center gap-x-2">
+													<label
+														className="sr-only"
+														htmlFor={colorObj.id}
+													>
+														{colorObj.name}
+													</label>
+													<RadioGroupItem
+														value={colorObj.id}
+														id={colorObj.id}
+														title={colorObj.name}
+													/>
+													<ColorBlock
+														color={colorObj.hex}
+													/>
+												</div>
 											</div>
-										</div>
-									))}
+										))}
 								</div>
 							</RadioGroup>
 						</fieldset>
