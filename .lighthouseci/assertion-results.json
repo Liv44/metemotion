@@ -1,0 +1,50 @@
+[
+	{
+		"name": "auditRan",
+		"expected": 1,
+		"actual": 0,
+		"values": [0],
+		"operator": ">=",
+		"passed": false,
+		"message": "\"accessibility\" is not a known audit.",
+		"auditId": "accessibility",
+		"level": "warn",
+		"url": "http://localhost:4173/"
+	},
+	{
+		"name": "auditRan",
+		"expected": 1,
+		"actual": 0,
+		"values": [0],
+		"operator": ">=",
+		"passed": false,
+		"message": "\"performance\" is not a known audit.",
+		"auditId": "performance",
+		"level": "warn",
+		"url": "http://localhost:4173/"
+	},
+	{
+		"name": "auditRan",
+		"expected": 1,
+		"actual": 0,
+		"values": [0],
+		"operator": ">=",
+		"passed": false,
+		"message": "\"seo\" is not a known audit.",
+		"auditId": "seo",
+		"level": "warn",
+		"url": "http://localhost:4173/"
+	},
+	{
+		"name": "auditRan",
+		"expected": 1,
+		"actual": 0,
+		"values": [0],
+		"operator": ">=",
+		"passed": false,
+		"message": "\"best-practices\" is not a known audit.",
+		"auditId": "best-practices",
+		"level": "warn",
+		"url": "http://localhost:4173/"
+	}
+]

@@ -29,7 +29,7 @@ jobs:
                   BASE_URL="https://metemotion.onrender.com"
                   echo "🌱 Test de l’URL base : $BASE_URL"
 
-                  PAGES=("/")
+                  PAGES=("/", "/search", "/share")
                   mkdir greenframe-reports
 
                   for path in "${PAGES[@]}"; do

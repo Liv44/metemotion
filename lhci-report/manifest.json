@@ -1,0 +1,14 @@
+[
+	{
+		"url": "http://localhost:4173/",
+		"isRepresentativeRun": true,
+		"htmlPath": "/home/lanayr/Documents/metemotion/lhci-report/localhost--2025_07_07_20_37_18.report.html",
+		"jsonPath": "/home/lanayr/Documents/metemotion/lhci-report/localhost--2025_07_07_20_37_18.report.json",
+		"summary": {
+			"performance": 0.74,
+			"accessibility": 0.95,
+			"best-practices": 1,
+			"seo": 0.82
+		}
+	}
+]
