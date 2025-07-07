@@ -182,12 +182,12 @@ export const Navbar: React.FC = () => {
 							const IconComponent = item.icon;
 							const isActive = isActivePage(item.href);
 							return (
-								<a
+								<Link
 									key={item.href}
 									ref={
 										index === 0 ? firstMobileItemRef : null
 									}
-									href={item.href}
+									to={item.href}
 									className={`
 										flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
 										${
@@ -217,7 +217,7 @@ export const Navbar: React.FC = () => {
 											aria-hidden="true"
 										></span>
 									)}
-								</a>
+								</Link>
 							);
 						})}
 
