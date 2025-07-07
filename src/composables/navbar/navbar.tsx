@@ -6,7 +6,8 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Heart, Home, Menu, Search, Smile, X } from "lucide-react";
+import { Menu, X, Home, Heart, Smile, Search, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 import React, { useEffect, useId, useRef, useState } from "react";
 
 interface NavItem {
@@ -100,6 +101,7 @@ export const Navbar: React.FC = () => {
 						return (
 							<NavigationMenuItem key={item.href}>
 								<NavigationMenuLink
+									asChild
 									href={item.href}
 									className={`
 										text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-3 py-2
@@ -112,7 +114,7 @@ export const Navbar: React.FC = () => {
 									aria-current={isActive ? "page" : undefined}
 									aria-label={item.description}
 								>
-									{item.label}
+									<Link to={item.href}>{item.label}</Link>
 								</NavigationMenuLink>
 							</NavigationMenuItem>
 						);
@@ -167,12 +169,12 @@ export const Navbar: React.FC = () => {
 							const IconComponent = item.icon;
 							const isActive = isActivePage(item.href);
 							return (
-								<a
+								<Link
 									key={item.href}
 									ref={
 										index === 0 ? firstMobileItemRef : null
 									}
-									href={item.href}
+									to={item.href}
 									className={`
 										flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
 										${
@@ -202,7 +204,7 @@ export const Navbar: React.FC = () => {
 											aria-hidden="true"
 										></span>
 									)}
-								</a>
+								</Link>
 							);
 						})}
 
