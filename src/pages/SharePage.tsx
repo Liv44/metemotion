@@ -108,34 +108,36 @@ const SharePage = () => {
 								aria-required="true"
 							/>
 						</div>
-					</div>
-					<div className="flex flex-col gap-2 items-center w-full">
-						<fieldset className="flex flex-col gap-2 items-center w-full border-0 p-0 m-0">
-							<legend className="mb-2">Couleur</legend>
-							<RadioGroup value={color} onValueChange={setColor}>
-								<div className="flex flex-col sm:flex-row gap-y-4 sm:gap-x-4 items-center justify-center w-full">
-									{colors?.map(colorObj => (
-										<div
-											key={colorObj.id}
-											className="flex flex-col items-center"
-										>
-											<div className="flex flex-row items-center gap-x-2">
-												<RadioGroupItem
-													value={colorObj.id}
-													id={colorObj.id}
-												/>
-												<ColorBlock
-													color={colorObj.hex || ""}
-												/>
+						<div className="flex flex-col gap-2 w-full">
+							<fieldset className="flex flex-col gap-2 w-full border-0 p-0 m-0">
+								<legend className="mb-2">Couleur</legend>
+								<RadioGroup
+									value={color}
+									onValueChange={setColor}
+								>
+									<div className="flex flex-col sm:flex-row gap-y-4 sm:gap-x-4 items-center justify-center w-full">
+										{colors?.map(colorObj => (
+											<div
+												key={colorObj.id}
+												className="flex flex-col items-center"
+											>
+												<div className="flex flex-row items-center gap-x-2">
+													<RadioGroupItem
+														value={colorObj.id}
+														id={colorObj.id}
+													/>
+													<ColorBlock
+														color={
+															colorObj.hex || ""
+														}
+													/>
+												</div>
 											</div>
-											<Label htmlFor={colorObj.id}>
-												{colorObj.name}
-											</Label>
-										</div>
-									))}
-								</div>
-							</RadioGroup>
-						</fieldset>
+										))}
+									</div>
+								</RadioGroup>
+							</fieldset>
+						</div>
 					</div>
 					{(error || createFeeling.error) && (
 						<div
