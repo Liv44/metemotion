@@ -7,7 +7,7 @@ import {
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Menu, X, Home, Heart, Smile, Search } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useId, useRef, useState } from "react";
 
 interface NavItem {
@@ -34,8 +34,9 @@ export const Navbar: React.FC = () => {
 
 	const mobileMenuId = useId();
 	const liveRegionId = useId();
+	const location = useLocation();
 
-	const currentPath = window.location.pathname;
+	const currentPath = location.pathname;
 
 	const isActivePage = (href: string): boolean => {
 		if (href === "/" && currentPath === "/") return true;
