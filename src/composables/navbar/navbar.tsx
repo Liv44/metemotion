@@ -6,9 +6,9 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, Home, Heart, Smile, Search } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Heart, Home, Menu, Search, Smile, X } from "lucide-react";
 import React, { useEffect, useId, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 interface NavItem {
 	label: string;
@@ -48,13 +48,13 @@ export const Navbar: React.FC = () => {
 			label: "Accueil",
 			href: "/",
 			icon: Home,
-			description: "Aller à la page d'accueil",
+			description: "Aller à la page Accueil",
 		},
 		{
 			label: "Rechercher",
 			href: "/search",
 			icon: Search,
-			description: "Aller à la page de recherche",
+			description: "Aller à la page Rechercher",
 		},
 		{
 			label: "Partage d'humeur",
@@ -210,11 +210,7 @@ export const Navbar: React.FC = () => {
 						})}
 
 						{/* Séparator */}
-						<div
-							className="border-t my-4"
-							role="separator"
-							aria-hidden="true"
-						></div>
+						<div className="border-t my-4" aria-hidden="true"></div>
 
 						<DialogAddThought />
 					</div>

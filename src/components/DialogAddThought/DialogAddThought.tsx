@@ -42,32 +42,45 @@ const DialogAddThought = () => {
 					<Button
 						className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-200 focus:ring-2 focus:ring-primary focus:ring-offset-2"
 						size="sm"
-						aria-label="Ouvrir le formulaire pour ajouter une nouvelle pensée"
+						aria-label="Ouvrir le formulaire pour ajouter une pensée"
+						aria-controls="dialog-content"
 					>
 						<Plus className="w-4 h-4 mr-2" aria-hidden="true" />
 						Ajouter une pensée
 					</Button>
 				</DialogTrigger>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Ajouter une pensée</DialogTitle>
-						<DialogDescription>
-							Quelle est ta pensée du jour ?
-						</DialogDescription>
-						<Textarea value={thought} onChange={handleFormChange} />
-					</DialogHeader>
-					<DialogFooter>
-						<form onSubmit={submitForm}>
-							<Button
-								type="submit"
-								disabled={isButtonDisabled}
-								aria-disabled={isButtonDisabled}
-							>
-								Envoyer
-							</Button>
-						</form>
-					</DialogFooter>
-				</DialogContent>
+				<div id="dialog-content">
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Ajouter une pensée</DialogTitle>
+							<DialogDescription>
+								Quelle est ta pensée du jour ?
+							</DialogDescription>
+							<label
+								htmlFor="thought"
+								className="sr-only"
+								aria-label="Ta pensée du jour"
+							></label>
+							<Textarea
+								value={thought}
+								onChange={handleFormChange}
+								id="thought"
+								name="thought"
+							/>
+						</DialogHeader>
+						<DialogFooter>
+							<form onSubmit={submitForm}>
+								<Button
+									type="submit"
+									disabled={isButtonDisabled}
+									aria-disabled={isButtonDisabled}
+								>
+									Envoyer
+								</Button>
+							</form>
+						</DialogFooter>
+					</DialogContent>
+				</div>
 			</Dialog>
 		</>
 	);

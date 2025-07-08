@@ -31,6 +31,8 @@ jobs:
               id: run-a11y
               env:
                   PREVIEW_URL: "https://metemotion.onrender.com"
+                  VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+                  VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
               run: |
                   echo "::group::Running a11y tests"
                   echo "URL: $PREVIEW_URL"

@@ -12,6 +12,9 @@ jobs:
 
         runs-on: ubuntu-latest
 
+        env:
+            VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+            VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -38,71 +41,49 @@ jobs:
               env:
                   PREVIEW_URL: "https://metemotion.onrender.com"
               with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  github-token: ${{ secrets.GH_TOKEN }}
                   script: |
                       const fs = require('fs');
-
                       const { owner, repo } = context.repo;
-                      const issue_number = context.issue.number;
-                      const previewBase   = process.env.PREVIEW_URL ?? '';
-                      const runUrl        = `https://github.com/${owner}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+                      const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 
-                      const manifestPath = './lhci-report/manifest.json';
-                      const summary      = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+                      const path = './lhci-report/manifest.json';
+                      const summary = JSON.parse(fs.readFileSync(path, 'utf8'));
 
-                      const toEmoji = score => {
-                        const pct = Math.round(score * 100);
-                        if (pct >= 90) return '🟢';
-                        if (pct >= 50) return '🟠';
+                      const toEmoji = (score) => {
+                        const percent = Math.round(score * 100);
+                        if (percent >= 90) return '🟢';
+                        if (percent >= 50) return '🟠';
                         return '🔴';
                       };
-                      const pct = v => Math.round(v * 100);
 
-                      const rows = summary
-                        .map(({ url, summary: s, htmlPath }) => {
-                          const pathname  = new URL(url).pathname;
-                          const liveUrl   = previewBase ? `${previewBase}${pathname}` : url;
-                          return `| [\`${pathname}\`](${liveUrl}) | ${toEmoji(s.performance)} ${pct(s.performance)} | ${toEmoji(s.accessibility)} ${pct(s.accessibility)} | ${toEmoji(s['best-practices'])} ${pct(s['best-practices'])} | ${toEmoji(s.seo)} ${pct(s.seo)} |`;
-                        })
-                        .join('\n');
+                      const formatScore = (value) => Math.round(value * 100);
+
+                      const makeRow = (entry) => {
+                        const { url, summary: s } = entry;
+                        const path = new URL(url).pathname;
+                        return `| [\`${path}\`](${url}) | ${toEmoji(s.performance)} ${formatScore(s.performance)} | ${toEmoji(s.accessibility)} ${formatScore(s.accessibility)} | ${toEmoji(s['best-practices'])} ${formatScore(s['best-practices'])} | ${toEmoji(s.seo)} ${formatScore(s.seo)} |`;
+                      };
+
+                      const rows = summary.map(makeRow).join('\n');
+
+                      const legend = `🔴 <50 (à améliorer) | 🟠 50–89 (moyen) | 🟢 ≥90 (bon)`;
 
                       const body = [
-                        '<!-- lhci-report -->',
                         '## 📊 Lighthouse report',
-                        '',
-                        `*Workflow run: [link](${runUrl})*`,
                         '',
                         '| Page | Performance | Accessibility | Best Practices | SEO |',
                         '|------|-------------|----------------|----------------|-----|',
-                        rows
+                        rows,
+                        '',
+                        legend,
+                        '',
+                        `📎 [Consulter le rapport complet (actions)](${runUrl})`
                       ].join('\n');
 
-                      const { data: comments } = await github.rest.issues.listComments({
+                      await github.rest.issues.createComment({
                         owner,
                         repo,
-                        issue_number,
-                        per_page: 100
+                        issue_number: context.issue.number,
+                        body
                       });
-
-                      const existing = comments.find(c =>
-                        c.user?.type === 'Bot' &&
-                        c.body?.includes('<!-- lhci-report -->')
-                      );
-
-                      if (existing) {
-                        await github.rest.issues.updateComment({
-                          owner,
-                          repo,
-                          comment_id: existing.id,
-                          body
-                        });
-                        core.info(`Comment mis à jour : #${existing.id}`);
-                      } else {
-                        await github.rest.issues.createComment({
-                          owner,
-                          repo,
-                          issue_number,
-                          body
-                        });
-                        core.info('Nouveau commentaire créé');
-                      }

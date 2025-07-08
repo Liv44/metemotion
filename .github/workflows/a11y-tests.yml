@@ -31,6 +31,8 @@ jobs:
               id: playwright
               env:
                   PREVIEW_URL: "https://metemotion.onrender.com"
+                  VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+                  VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
               run: |
                   mkdir -p results
                   pnpx playwright test --project=chromium | tee results/manual-a11y.log

@@ -11,8 +11,8 @@ const useColors = () => {
 			}
 			return data.map(color => ({
 				id: color.id,
-				name: color.label,
-				hex: color.hexa,
+				name: color.label as string,
+				hex: color.hexa as string,
 			}));
 		},
 	});
