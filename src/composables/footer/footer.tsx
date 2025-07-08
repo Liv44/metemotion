@@ -177,9 +177,9 @@ export const Footer: React.FC = () => {
 
 						{/* Contact */}
 						<div className="pt-2">
-							<h4 className="text-sm font-semibold text-foreground/90 uppercase tracking-wider mb-3">
+							<h3 className="text-sm font-semibold text-foreground/90 uppercase tracking-wider mb-3">
 								Contact
-							</h4>
+							</h3>
 							<div className="flex flex-wrap gap-2">
 								{socialLinks.map(link => {
 									const IconComponent = link.icon;
