@@ -19,7 +19,6 @@ const SearchPage = () => {
 			return;
 		}
 	}, [filteredFeelings]);
-	console.log(filteredFeelings[0]?.createdAt.toLocaleDateString());
 
 	const filteredAndSortedItems = useMemo(() => {
 		if (!filteredFeelings || !filteredThoughts) {
