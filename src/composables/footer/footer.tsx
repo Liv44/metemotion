@@ -145,7 +145,7 @@ export const Footer: React.FC = () => {
 			<div className="w-full px-4 md:px-6 py-12">
 				{/* Invisible header for screen readers */}
 				<h2 id={mainFooterId} className="sr-only">
-					Pied de page de MetÉmotion
+					Pied de page de Métémotion
 				</h2>
 
 				{/* Main content of the footer */}
@@ -156,7 +156,7 @@ export const Footer: React.FC = () => {
 						aria-labelledby={brandingId}
 					>
 						<h3 id={brandingId} className="sr-only">
-							À propos de MetÉmotion
+							À propos de Métémotion
 						</h3>
 
 						<div className="flex items-center space-x-2">
@@ -165,7 +165,7 @@ export const Footer: React.FC = () => {
 								aria-hidden="true"
 							/>
 							<span className="text-xl font-bold text-primary">
-								MetÉmotion
+								Métémotion
 							</span>
 						</div>
 
@@ -248,9 +248,9 @@ export const Footer: React.FC = () => {
 				<div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-background">
 					<p role="contentinfo">
 						<span
-							aria-label={`Copyright ${currentYear} MetÉmotion`}
+							aria-label={`Copyright ${currentYear} Métémotion`}
 						>
-							© {currentYear} MetÉmotion.
+							© {currentYear} Métémotion.
 						</span>{" "}
 						Tous droits réservés.
 					</p>

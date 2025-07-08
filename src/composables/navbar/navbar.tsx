@@ -239,14 +239,14 @@ export const Navbar: React.FC = () => {
 					<a
 						href="/"
 						className="flex items-center space-x-2 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
-						aria-label="Retour à l'accueil de MetÉmotion"
+						aria-label="Retour à l'accueil de Métémotion"
 					>
 						<Heart
 							className="h-6 w-6 text-primary"
 							aria-hidden="true"
 						/>
 						<h1 className="text-xl font-bold text-primary">
-							MetÉmotion
+							Métémotion
 						</h1>
 					</a>
 				</div>
