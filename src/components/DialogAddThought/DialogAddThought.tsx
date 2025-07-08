@@ -52,7 +52,9 @@ const DialogAddThought = () => {
 				<div id="dialog-content">
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>Ajouter une pensée</DialogTitle>
+							<DialogTitle>
+								<h1>Ajouter une pensée</h1>
+							</DialogTitle>
 							<DialogDescription>
 								Quelle est ta pensée du jour ?
 							</DialogDescription>
