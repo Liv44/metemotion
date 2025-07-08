@@ -11,6 +11,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import useCreateFeelings from "@/usecases/useCreateFeelings";
+import { Toaster, toast } from "sonner";
 import useColors from "@/usecases/useGetColors";
 import { useEffect, useRef, useState } from "react";
 
@@ -54,6 +55,10 @@ const SharePage = () => {
 			keywords: keywordsArray,
 			color,
 		});
+		toast("L'émotion a bien été envoyée");
+		setHumor("JOIE");
+		setKeyword("");
+		setColor(undefined);
 	};
 
 	return (
@@ -63,6 +68,7 @@ const SharePage = () => {
 				Ajoute ton émotion en la décrivant avec des mots clés, et une
 				image ou une couleur.
 			</p>
+			<Toaster position="top-center" richColors />
 			<form
 				className="flex flex-col gap-y-6 w-full"
 				onSubmit={handleSubmit}
