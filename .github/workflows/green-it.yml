@@ -1,0 +1,112 @@
+name: GreenFrame audit
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+        branches:
+            - main
+
+jobs:
+    greenframe:
+        name: GreenFrame CO₂ audit
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: 🔧 Setup Node.js and pnpm
+              uses: ./.github/actions/setup-node-pnpm
+              with:
+                  node-version: 22.14.0
+                  pnpm-version: 10.6.3
+
+            - name: Install GreenFrame CLI
+              run: curl https://assets.greenframe.io/install.sh | bash
+
+            - name: Lancer GreenFrame sur plusieurs pages
+              run: |
+                  BASE_URL="https://metemotion.onrender.com"
+                  echo "🌱 Test de l’URL base : $BASE_URL"
+
+                  PAGES=("/", "/search", "/share")
+                  mkdir greenframe-reports
+
+                  for path in "${PAGES[@]}"; do
+                    SAFE_NAME=$(echo "$path" | sed 's|/|_|g')
+                    FULL_URL="${BASE_URL%/}${path}"
+                    echo "➡️ Analyse de ${FULL_URL}"
+
+                    greenframe analyze "$FULL_URL" > "greenframe-reports/${SAFE_NAME}.txt" || echo "Échec pour $FULL_URL" > "greenframe-reports/${SAFE_NAME}.txt"
+                  done
+
+            - name: Poster ou mettre à jour le commentaire PR
+              uses: actions/github-script@v7
+              with:
+                  github-token: ${{ secrets.GH_TOKEN }}
+
+                  script: |
+                      const fs = require('fs');
+                      const path = require('path');
+                      const { owner, repo } = context.repo;
+                      const issue_number = context.issue.number;
+                      const baseUrl = process.env.BASE_URL;
+
+                      const files = fs.readdirSync('./greenframe-reports');
+                      let body = [
+                        '<!-- greenframe-report -->',
+                        '## 🌿 Rapport GreenFrame multipage',
+                        `🔗 Base URL : [${baseUrl}](${baseUrl})`,
+                        ''
+                      ];
+
+                      for (const file of files) {
+                        const content = fs.readFileSync(path.join('./greenframe-reports', file), 'utf8');
+                        const page = file.replace('.txt', '').replace(/_/g, '/') || '/';
+
+                        if (content.includes('Échec pour')) {
+                          body.push(`### ❌ ${page}\n- ${content}`);
+                          continue;
+                        }
+
+                        body.push(`### ${page}`);
+                        body.push('```');
+                        body.push(content);
+                        body.push('```');
+                        body.push('');
+                      }
+
+                      body.push('_Analyse réalisée avec [GreenFrame](https://greenframe.io)_');
+
+                      const finalComment = body.join('\n');
+
+                      const { data: comments } = await github.rest.issues.listComments({
+                        owner,
+                        repo,
+                        issue_number,
+                        per_page: 100
+                      });
+
+                      const existing = comments.find(c =>
+                        c.user?.type === 'Bot' && c.body?.includes('<!-- greenframe-report -->')
+                      );
+
+                      if (existing) {
+                        await github.rest.issues.updateComment({
+                          owner,
+                          repo,
+                          comment_id: existing.id,
+                          body: finalComment
+                        });
+                        core.info("🔁 Commentaire mis à jour");
+                      } else {
+                        await github.rest.issues.createComment({
+                          owner,
+                          repo,
+                          issue_number,
+                          body: finalComment
+                        });
+                        core.info("🆕 Nouveau commentaire ajouté");
+                      }
+              env:
+                  BASE_URL: "https://metemotion.onrender.com"
