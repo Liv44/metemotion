@@ -1,0 +1,26 @@
+{
+	"ci": {
+		"collect": {
+			"startServerCommand": "pnpm run preview",
+			"startServerReadyPattern": "Local:",
+			"url": [
+				"http://localhost:4173/",
+				"http://localhost:4173/share",
+				"http://localhost:4173/search"
+			],
+			"numberOfRuns": 1
+		},
+		"upload": {
+			"target": "filesystem",
+			"outputDir": "./lhci-report"
+		},
+		"assert": {
+			"assertions": {
+				"accessibility": "warn",
+				"performance": "warn",
+				"seo": "warn",
+				"best-practices": "warn"
+			}
+		}
+	}
+}
