@@ -1,11 +1,11 @@
 export type Humor = "JOIE" | "TRISTESSE" | "COLÈRE" | "PEUR" | "SURPRISE";
 
 export const HUMOR_COLORS: Record<Humor, string> = {
-	JOIE: "#F59E0B", // Amber
-	TRISTESSE: "#0891B2", // Cyan/Teal - cooler, more distinct
-	COLÈRE: "#EF4444", // Red
-	PEUR: "#7C3AED", // Purple - mysterious and anxious
-	SURPRISE: "#10B981", // Emerald
+	JOIE: "#D800A5",
+	TRISTESSE: "#06708A",
+	COLÈRE: "#CC3A3A",
+	PEUR: "#7C3AED",
+	SURPRISE: "#0A6D4B",
 };
 
 export const getHumorColor = (humor: Humor): string => {

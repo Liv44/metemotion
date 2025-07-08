@@ -106,7 +106,7 @@ const TrendTabs = ({ feelings }: { feelings: Feeling[] }) => {
 											)}
 										</span>
 									</div>
-									<span className="text-xs text-gray-500 whitespace-nowrap ml-2">
+									<span className="text-xs text-gray-800 whitespace-nowrap ml-2">
 										{day.count} ressenti
 										{day.count > 1 ? "s" : ""}
 									</span>
@@ -129,7 +129,7 @@ const TrendTabs = ({ feelings }: { feelings: Feeling[] }) => {
 											>
 												{day.dominantMood}
 											</span>
-											<span className="text-xs text-gray-500">
+											<span className="text-xs text-gray-800">
 												dominant
 											</span>
 										</div>
@@ -161,7 +161,7 @@ const TrendTabs = ({ feelings }: { feelings: Feeling[] }) => {
 										</div>
 									</div>
 								) : (
-									<div className="text-xs text-gray-400 italic">
+									<div className="text-xs text-gray-800 italic">
 										Aucun ressenti enregistré
 									</div>
 								)}
