@@ -5,7 +5,7 @@ export const HUMOR_COLORS: Record<Humor, string> = {
 	TRISTESSE: "#06708A",
 	COLÈRE: "#CC3A3A",
 	PEUR: "#7C3AED",
-	SURPRISE: "#0C855C",
+	SURPRISE: "#0A6D4B",
 };
 
 export const getHumorColor = (humor: Humor): string => {
